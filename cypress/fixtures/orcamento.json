@@ -1,0 +1,60 @@
+{ 
+"DataCriacao": "2025-11-05",
+"CodigoVendedor": "01198",
+"OidFilial": 1224953,
+"OidTpo": 3398924,
+"Situacao": "1",
+"TotalPedido": 569.75,
+"ValorDesconto": 51.69,
+"ValorFrete": 104.56,
+"OutrasDespesasInclusas": 0,
+"OrigemPedido": 3933899,
+"IdPedidoOrigem": "13",
+"EmailPedido": "edgar29alves@gmail.com",
+"cliente": {
+"Nome": "EDGAR ALVES",
+"RazaoSocial": "",
+"CpfCnpj": "27883713060",
+"Email": "edgar29alves@gmail.com",
+"Telefone": "04132232323",
+"Celular": "041998948584",
+"Cep": "20211120",
+"Endereco": "RUA AMOROSO LIMA",
+"NumeroEndereco": "123",
+"ComplementoEndereco": "",
+"Bairro": "CIDADE NOVA",
+"CodigoCidade": "2308110",
+"NomeCidade": "RIO DE JANEIRO",
+"SiglaUf": "RJ",
+"Referencia": "",
+"Classificacoes": [
+37661
+]
+},
+"codigoFormaPagamento": 7274941,
+"codigoTipoDocumento": 2731166,
+"Parcelas": [
+{
+"IdTipoDocumento": 2731166,
+"Valor": 569.75,
+"QuantidadeParcelasCartao": 1,
+"ValorParcelasCartao": 569.75,
+"Vencimento": "2025-11-26"
+}
+],
+"ParcelarFrete": false,
+"PrevisaoEntrega": "2026-01-26",
+"Transportadora": {
+"CodigoTransportadora": "025",
+"TipoFrete": 1
+},
+"Produtos": [
+{
+"Codigo": "76421",
+"Quantidade": 3.18,
+"Preco": 162.54,
+"TipoEntregaPedido": "F",
+"IdPedidoOrigem": "13"
+}
+]
+}
