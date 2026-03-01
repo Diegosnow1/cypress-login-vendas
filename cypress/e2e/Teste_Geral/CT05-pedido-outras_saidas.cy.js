@@ -1,9 +1,4 @@
-#  Cols QA — Cypress e Git
-----------------------------------------------------------------------------------------------------------
-
-##  Modelo de Ficha / Caso de Teste
-
-<!-- /**
+ /**
  * ================================================================
  * --CASO DE TESTE: CT05 - Pedido Outras Saídas
  * ================================================================
@@ -47,40 +42,4 @@
  * -- SQL
  *
  * ================================================================
- */ -->
-
-----------------------------------------------------------------------------------------------------------
-
-⬇️ Git —  / Atualizar código 
-
-git status
-git add .
-git commit -m "mensagem"
-git push
-👉 SUBIR = sua máquina → GitHub
-
-----------------------------------------------------------------------------------------------------------
-
-⬇️ Git —  / Atualizar código
-
-Projeto já existe:
-git pull
-Projeto do zero:
-git clone https://github.com/Diegosnow1/vendas-e2e-play.git
-
-----------------------------------------------------------------------------------------------------------
-
-🧪 Playwright — Comandos principais
-npx playwright test
-npx playwright test tests/Formatto.spec.ts
-npx playwright test --debug
-npx playwright show-report
-npx playwright codegen http://URL_DO_SISTEMA
-npx playwright codegen --test-id-attribute id http://URL_DO_SISTEMA
-
-----------------------------------------------------------------------------------------------------------
-
-❄️ Cypress — Comandos principais
-npx cypress open
-npx cypress run
-npx cypress run --spec "cypress/e2e/login-vendas.cy.js"
+ */ 
