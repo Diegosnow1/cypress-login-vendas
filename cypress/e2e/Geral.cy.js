@@ -48,6 +48,26 @@ describe('Orçamentos - Geral Marcio', () => {
 
 }
 
+
+const ItensForaEstoque = (page) => {
+    cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
+    cy.get('#PaginaPesquisaProduto_botaoProdutosForaDeEstoque').click()
+    cy.get('[name="Codigo"]').type('T0147')
+    cy.get('#ProdutosForaEstoque_BotaoPesquisar').click()
+    cy.get('#ProdutoForaEstoque_BotaoSelecionarTodos2').should('be.visible').click()
+    cy.get('#ProdutoForaEstoque_BotaoOk2').click()
+    cy.get('input[value="0,000"]', { timeout: 30000 })
+      .should('be.visible')
+      .clear()
+      .type('1,000', { force: true })
+    cy.contains('button', /^Aplicar$/i, { timeout: 30000 })
+      .should('be.visible')
+      .and('not.be.disabled')
+      .click()
+    cy.wait(10000)
+
+}
+
   const Cliente = (page) => {
     cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible').click()
     cy.get('[name="CpfCnpj"]').type('26.333.047/0001-60')
@@ -72,7 +92,7 @@ describe('Orçamentos - Geral Marcio', () => {
 
   const FinalizarOrcamentoApenasOrcamento = (page) => {
     cy.get('#orcamento_menu_finalizar', { timeout: 30000 }).should('be.visible').click()  
-    cy.wait(8000)
+    //cy.wait(8000)
     cy.get('[name="FinalizarOrcamento_GrupoOpcaoOrcamento_ApenasOrcando"]').click()
     cy.get('[for="FinalizarOrcamento_Inconsistencias_TabelaPergunta_Dados_InputPergunta_#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#_Nao"] > [name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"]').click()
     cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento').click()
@@ -101,7 +121,15 @@ describe('Orçamentos - Geral Marcio', () => {
     FormaPagamento()
     Endereco()
     FinalizarOrcamentoConfirmado()
-   
+
+}) 
+  it('CT02 Fluxo  Venda completa produto fora de estoque', () => {
+    fazerLogin('ORC01', 'm')
+    ItensForaEstoque()
+    Cliente()
+    FormaPagamento()
+    Endereco()
+    FinalizarOrcamentoApenasOrcamento()
 })
 
 })
