@@ -28,10 +28,10 @@
  * ----------------------------------------------------------------
  * -- SQL
  *
- * ================================================================
+ * ================================================================*/
 
 const {
-  fazerLogin,
+  fazerLoginMenuVenda,
   ItensForaEstoque,
   Cliente,
   FormaPagamento,
@@ -41,7 +41,7 @@ const {
 
 describe('Orçamentos - Geral Marcio', () => {
  it('CT02 Fluxo  Venda completa produto fora de estoque', () => {
-    fazerLogin('ORC01', 'm')
+    fazerLoginMenuVenda('ORC01', 'm')
     ItensForaEstoque()
     Cliente()
     FormaPagamento()

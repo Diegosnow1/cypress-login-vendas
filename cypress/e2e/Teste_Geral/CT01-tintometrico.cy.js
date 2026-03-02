@@ -29,10 +29,10 @@
  * ----------------------------------------------------------------
  * -- SQL
  *
- * ================================================================
+ * ================================================================*/
 
 const {
-  fazerLogin,
+  fazerLoginMenuVenda,
   ItensTintometrico,
   Cliente,
   FormaPagamento,
@@ -42,7 +42,7 @@ const {
 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT01 Fluxo  Venda completa produto tintometrico', () => {
-    fazerLogin('ORC01', 'm')
+    fazerLoginMenuVenda('ORC01', 'm')
     ItensTintometrico()
     Cliente()
     FormaPagamento()

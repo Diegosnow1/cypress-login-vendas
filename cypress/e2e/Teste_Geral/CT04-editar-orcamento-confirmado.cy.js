@@ -32,7 +32,7 @@
  * ================================================================ */
 
 const {
-  fazerLogin,
+  fazerLoginMenuVenda,
   Itens,
   Cliente,
   FormaPagamento,
@@ -43,7 +43,7 @@ const {
 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT04)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como  ( orçamento confirmado) ', () => {
-    fazerLogin('ORC01', 'm')
+    fazerLoginMenuVenda('ORC01', 'm')
     Itens()
     Cliente()
     FormaPagamento()

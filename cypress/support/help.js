@@ -3,7 +3,7 @@ const esperar = () => {
   cy.contains(/Carregando|Aguarde/i, { timeout: 30000 }).should('not.exist')
 }
 
-const fazerLogin = (usuario, senha) => {
+const fazerLoginMenuVenda = (usuario, senha) => {
   cy.visit('http://localhost:9999/login')
   cy.get('#Login_Usuario').type(usuario)
   cy.get('#Login_Senha').type(senha, { force: true })
@@ -13,6 +13,45 @@ const fazerLogin = (usuario, senha) => {
 
   cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
   cy.get('#MenuPrincipal_OrcamentoVenda', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="data-password"]').type('1')
+  cy.get('#SenhaVendedor_BotaoOk').click()
+
+  esperar()
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).should('be.visible')
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).click({ force: true })
+  cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
+}
+
+
+const fazerLoginMenuOutrasSaidas = (usuario, senha) => {
+  cy.visit('http://localhost:9999/login')
+  cy.get('#Login_Usuario').type(usuario)
+  cy.get('#Login_Senha').type(senha, { force: true })
+  cy.get('#Login_BotaoEntrar').click()
+
+  esperar()
+
+  cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#MenuPrincipal_OrcamentoOutrasSaidas', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="data-password"]').type('1')
+  cy.get('#SenhaVendedor_BotaoOk').click()
+
+  esperar()
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).should('be.visible')
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).click({ force: true })
+  cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
+}
+
+const fazerLoginMenuTransferencia = (usuario, senha) => {
+  cy.visit('http://localhost:9999/login')
+  cy.get('#Login_Usuario').type(usuario)
+  cy.get('#Login_Senha').type(senha, { force: true })
+  cy.get('#Login_BotaoEntrar').click()
+
+  esperar()
+
+  cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#MenuPrincipal_OrcamentoTransferencia', { timeout: 30000 }).should('be.visible').click()
   cy.get('[name="data-password"]').type('1')
   cy.get('#SenhaVendedor_BotaoOk').click()
 
@@ -151,11 +190,29 @@ const EditarOrcamento = (page) => {
   cy.wait(15000)
 }
 
+const ItensTransferencia = (page) => {
+cy.get('[name="Codigo"]').type('01241')
+  cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
+  esperar()
+  cy.contains('button', /^OK$/i, { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()
+  cy.get('#input-Quantidade-item-Linha-1', { timeout: 30000 })
+    .should('be.visible')
+    .clear()
+    .type('2,000', { force: true })
+  cy.wait(15000)
+}
+
 module.exports = {
   esperar,
-  fazerLogin,
+  fazerLoginMenuVenda,
+  fazerLoginMenuOutrasSaidas,
+  fazerLoginMenuTransferencia,
   ItensTintometrico,
   ItensForaEstoque,
+  ItensTransferencia,
   Itens,
   Cliente,
   FormaPagamento,

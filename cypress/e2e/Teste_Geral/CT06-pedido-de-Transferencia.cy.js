@@ -1,6 +1,6 @@
  /**
  * ================================================================
- * --CASO DE TESTE: CT05 - Pedido Outras Saídas como Orçamento Confirmado e Apenas Orçamento
+ * --CASO DE TESTE: CT06 - Pedido de Transferência
  * ================================================================
  *
  * Ambiente: Homologação
@@ -11,8 +11,7 @@
  * --REGRAS IMPORTANTES (Recomendação do DEV) nº 3 
  * ----------------------------------------------------------------
  * Sempre realizar pelo menos:
- * - 1 pedido de Outras Saídas
- * - 1 transferência
+ * - 1 pedido de Transferência
  *
  * Essas validações são críticas, pois alterações podem impactar
  * essa funcionalidade e gerar erro apenas no cliente final.
@@ -25,15 +24,15 @@
  * - Apenas Orçamento
  *
  * Validar que não ocorram erros ao:
- * - Criar pedido de Outras Saídas
+ * - Criar pedido de Transferência
  * - Salvar o orçamento
  *
  * ----------------------------------------------------------------
  * --RESULTADO ESPERADO
  * ----------------------------------------------------------------
- * Ao realizar um pedido de Outras Saídas:
+ * Ao realizar um pedido de Transferência:
  * - O orçamento deve ser finalizado com a situação
- *   "Orçamento Confirmado"
+ *   "Orçamento Confirmado" e de "apenas orçamento"
  * - O sistema não deve apresentar erros no fluxo
  *
  * ----------------------------------------------------------------
@@ -44,10 +43,9 @@
  * ================================================================
  */ 
 
-
  const {
-  fazerLoginMenuOutrasSaidas,
-  Itens,
+  fazerLoginMenuTransferencia,
+  ItensTransferencia,
   Cliente,
   FormaPagamento,
   Endereco,
@@ -57,17 +55,17 @@
 } = require('../../support/help')
 
 describe('Orçamentos - Geral Marcio', () => {
-  it('CT05 - Pedido Outras Saídas como Orçamento Confirmado e Apenas Orçamento', () => {
-    fazerLoginMenuOutrasSaidas('ORC01', 'm')
-    Itens()
-    Cliente()
+  it('CT06 - Pedido de Transferência como Orçamento Confirmado e Apenas Orçamento', () => {
+    fazerLoginMenuTransferencia('ORC01', 'm')
+    //ItensTransferencia()
+    //Cliente()
     //FormaPagamento()
-    Endereco()
+    //Endereco()
     FinalizarOrcamentoConfirmado()
-    fazerLoginMenuOutrasSaidas('ORC01', 'm')
-    Itens()
-    Cliente()
-    Endereco()
+    fazerLoginMenuTransferencia('ORC01', 'm')
+    ItensTransferencia()
+    //Cliente()
+    //Endereco()
     FinalizarOrcamentoApenasOrcamento()
 
  
