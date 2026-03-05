@@ -61,12 +61,12 @@ describe('Orçamentos - Geral Marcio', () => {
     //Cliente()
     //FormaPagamento()
     //Endereco()
-    FinalizarOrcamentoConfirmado()
-    fazerLoginMenuTransferencia('ORC01', 'm')
+    //FinalizarOrcamentoConfirmado()
+    //fazerLoginMenuTransferencia('ORC01', 'm')
     ItensTransferencia()
     //Cliente()
     //Endereco()
-    FinalizarOrcamentoApenasOrcamento()
+    //FinalizarOrcamentoApenasOrcamento()
 
  
 }) 

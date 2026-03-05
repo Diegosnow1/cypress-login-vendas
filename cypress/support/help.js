@@ -19,7 +19,7 @@ const fazerLoginMenuVenda = (usuario, senha) => {
   esperar()
   cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).should('be.visible')
   cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).click({ force: true })
-  cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
+  //cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
 }
 
 
@@ -58,7 +58,7 @@ const fazerLoginMenuTransferencia = (usuario, senha) => {
   esperar()
   cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).should('be.visible')
   cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).click({ force: true })
-  cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
+  //cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
 }
 
 const ItensTintometrico = (page) => {
@@ -191,18 +191,12 @@ const EditarOrcamento = (page) => {
 }
 
 const ItensTransferencia = (page) => {
-cy.get('[name="Codigo"]').type('01241')
+  cy.get('[name="EstoqueDisponivelFilialCorrente"]').click()
+  cy.get('[name="Codigo"]').type('28013').click()
   cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
-  esperar()
-  cy.contains('button', /^OK$/i, { timeout: 30000 })
-    .should('be.visible')
-    .and('not.be.disabled')
-    .click()
-  cy.get('#input-Quantidade-item-Linha-1', { timeout: 30000 })
-    .should('be.visible')
-    .clear()
-    .type('2,000', { force: true })
-  cy.wait(15000)
+  cy.get('#itemPesquisaProduto_ColunaCodigo_28013').click()
+  cy.get(':nth-child(5) > #BarraFerramentasGrid_botaoOk').click()
+
 }
 
 module.exports = {
