@@ -57,13 +57,7 @@
 } = require('../../support/help')
 
 describe('Orçamentos - Geral Marcio', () => {
-  it('CT05 - Pedido Outras Saídas como Orçamento Confirmado e Apenas Orçamento', () => {
-    fazerLoginMenuOutrasSaidas('ORC01', 'm')
-    Itens()
-    Cliente()
-    //FormaPagamento()
-    Endereco()
-    FinalizarOrcamentoConfirmado()
+  it('CT04-a - Pedido Outras Saídas como Orçamento  Apenas Orçamento', () => {
     fazerLoginMenuOutrasSaidas('ORC01', 'm')
     Itens()
     Cliente()
@@ -72,4 +66,14 @@ describe('Orçamentos - Geral Marcio', () => {
 
  
 }) 
-})
+describe('Orçamentos - Geral Marcio', () => {
+  it('CT04-b - Pedido Outras Saídas como Orçamento Confirmado ', () => {
+    fazerLoginMenuOutrasSaidas('ORC01', 'm')
+    Itens()
+    Cliente()
+    Endereco()
+    FinalizarOrcamentoConfirmado()
+}) 
+
+}) 
+}) 

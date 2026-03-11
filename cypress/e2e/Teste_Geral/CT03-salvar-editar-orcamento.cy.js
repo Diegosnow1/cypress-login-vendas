@@ -15,12 +15,12 @@
  * ----------------------------------------------------------------
  * --OBJETIVO DO TESTE
  * ----------------------------------------------------------------
- * (CT03)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento)
+ * (CT03)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) e ( orçamento confirmado).
  *
  * ----------------------------------------------------------------
  * --RESULTADO ESPERADO
  * ----------------------------------------------------------------
- * - Ao criar, salvar o pedido e logo entrar novamente e editar, após o sistema deve finalizar o orçamento com a situação de apenas orçando e sem erros.
+ * - Ao criar, salvar o pedido e logo entrar novamente e editar, após o sistema deve finalizar o orçamento com a situação de apenas orçando  e  orçamento confirmado,processo sem erros.
  *
  *
  *
@@ -38,11 +38,13 @@ const {
   FormaPagamento,
   Endereco,
   FinalizarOrcamentoApenasOrcamento,
-  EditarOrcamento
+  EditarOrcamento,
+  FinalizarOrcamentoConfirmado,
+  
 } = require('../../support/help')
 
 describe('Orçamentos - Geral Marcio', () => {
-  it('CT03)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) ', () => {
+  it('CT03-a)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) ', () => {
     fazerLoginMenuVenda('ORC01', 'm')
     Itens()
     Cliente()
@@ -51,10 +53,21 @@ describe('Orçamentos - Geral Marcio', () => {
     FinalizarOrcamentoApenasOrcamento()
     EditarOrcamento()
     FinalizarOrcamentoApenasOrcamento() 
-
-
+})  
+describe('Orçamentos - Geral Marcio', () => {
+/*   it('CT03-b)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como  ( orçamento confirmado) ', () => {
+    fazerLoginMenuVenda('ORC01', 'm')
+    Itens()
+    Cliente()
+    FormaPagamento()
+    Endereco()
+    FinalizarOrcamentoConfirmado()
+    EditarOrcamento()
+    FinalizarOrcamentoConfirmado() 
+})  */
 }) 
 }) 
+
 
 
 

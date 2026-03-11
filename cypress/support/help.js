@@ -4,7 +4,8 @@ const esperar = () => {
 }
 
 const fazerLoginMenuVenda = (usuario, senha) => {
-  cy.visit('http://localhost:9999/login')
+  //cy.visit('http://localhost:9999/login')
+  cy.visit('http://10.10.11.138:9999/login')
   cy.get('#Login_Usuario').type(usuario)
   cy.get('#Login_Senha').type(senha, { force: true })
   cy.get('#Login_BotaoEntrar').click()
@@ -24,7 +25,8 @@ const fazerLoginMenuVenda = (usuario, senha) => {
 
 
 const fazerLoginMenuOutrasSaidas = (usuario, senha) => {
-  cy.visit('http://localhost:9999/login')
+  //cy.visit('http://localhost:9999/login')
+  cy.visit('http://10.10.11.138:9999/login')
   cy.get('#Login_Usuario').type(usuario)
   cy.get('#Login_Senha').type(senha, { force: true })
   cy.get('#Login_BotaoEntrar').click()
@@ -43,7 +45,8 @@ const fazerLoginMenuOutrasSaidas = (usuario, senha) => {
 }
 
 const fazerLoginMenuTransferencia = (usuario, senha) => {
-  cy.visit('http://localhost:9999/login')
+  //cy.visit('http://localhost:9999/login')
+  cy.visit('http://10.10.11.138:9999/login')
   cy.get('#Login_Usuario').type(usuario)
   cy.get('#Login_Senha').type(senha, { force: true })
   cy.get('#Login_BotaoEntrar').click()
@@ -103,7 +106,7 @@ const ItensForaEstoque = (page) => {
 
 const Itens = (page) => {
   cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
-  cy.get('[name="Codigo"]').type('01241')
+  cy.get('[name="Codigo"]').type('21101')
   cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
   esperar()
   cy.contains('button', /^OK$/i, { timeout: 30000 })
@@ -114,6 +117,19 @@ const Itens = (page) => {
     .should('be.visible')
     .clear()
     .type('2,000', { force: true })
+
+  cy.get('#barra-ferramentas-grid-itens__botao-incluir').click()
+  cy.get('[name="Codigo"]').type('24059')
+  cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
+  esperar()
+  cy.contains('button', /^OK$/i, { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()
+  cy.get('#input-Quantidade-item-Linha-2', { timeout: 30000 })
+    .should('be.visible')
+    .clear()
+    .type('3,500', { force: true })
   cy.wait(15000)
 }
 
@@ -128,8 +144,18 @@ const Cliente = (page) => {
 
 const FormaPagamento = (page) => {
   cy.get('#orcamento_menu_formapagamento_react', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#AbaFormaDePagamento_incluir').click()
+  cy.get('[name="Tipo"]').select('À Vista')
+  cy.get('[name="IdTipoDocumento"]').select('PIX')
+  cy.get('#IncluirEditarParcela_Valor').should('be.visible').clear().type('10,00', { force: true })
+  //cy.wait(15000)
+  cy.get('#IncluirEditarParcela_BotaoAplicar').click()
   //cy.wait(15000)
 }
+
+
+
+
 
 const Endereco = (page) => {
   cy.get('#orcamento_menu_enderecos_react', { timeout: 30000 }).should('be.visible').click()
@@ -153,6 +179,7 @@ const FinalizarOrcamentoApenasOrcamento = (page) => {
   cy.wait(8000)
   responderPerguntaAjudaProfissionalSeExistir()
   cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento').click()
+  //VALIDAR SE O ORÇAMENTO FOI FINALIZADO COM SUCESSO, MENSAGEM DE ORÇAMENTO CONCLUÍDO
   cy.contains(/Orçamento Concluído/i, { timeout: 30000 }).should('be.visible')
 }
 
@@ -164,6 +191,7 @@ const FinalizarOrcamentoConfirmado = (page) => {
   responderPerguntaAjudaProfissionalSeExistir()
   cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento').click()
   cy.wait(8000)
+  //VALIDAR SE O ORÇAMENTO FOI FINALIZADO COM SUCESSO, MENSAGEM DE ORÇAMENTO CONCLUÍDO
   cy.contains(/Orçamento Concluído/i, { timeout: 30000 }).should('be.visible')
 }
 
@@ -184,18 +212,31 @@ const EditarOrcamento = (page) => {
     .should('be.visible')
     .clear()
     .type('2,000', { force: true })
+    //VALIDAR SE O TOTAL DE ITENS FOI ATUALIZADO PARA 3,
   cy.get('#Totalizador_QuantidadeItens', { timeout: 30000 })
     .should('be.visible')
-    .should('have.value', '2')
+    .should('have.value', '3')
   cy.wait(15000)
+
+  //VALIDAR SE EXISTE AS DUAS LINHAS COM AS PARCELAS (DINHEIRO E PIX)
+  cy.get('#orcamento_menu_formapagamento_react', { timeout: 30000 }).should('be.visible').click()
+  cy.contains('td', /^Dinheiro$/i, { timeout: 30000 }).should('be.visible')
+  cy.contains('td', /^PIX$/i, { timeout: 30000 }).should('be.visible')
+
 }
 
 const ItensTransferencia = (page) => {
-  cy.get('[name="EstoqueDisponivelFilialCorrente"]').click()
-  cy.get('[name="Codigo"]').type('28013').click()
-  cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
-  cy.get('#itemPesquisaProduto_ColunaCodigo_28013').click()
-  cy.get(':nth-child(5) > #BarraFerramentasGrid_botaoOk').click()
+  cy.get('[name="Codigo"]').type('21101').click()
+  cy.get('#PaginaPesquisaProduto_botaoPesquisarInserirContinuar').click()
+  cy.get('#PaginaPesquisaProdutoContainer_Breadcrumb_BtnVoltar').click()
+
+}
+
+const FilialDestino = (page) => {
+  cy.get('#orcamento_menu_destino').click()
+  cy.get('[name="Destino"]').select('02-02 - CAPARAO-centrao/SOL')
+  cy.get('[name="Destino"] option:selected').should('contain.text', '02-02 - CAPARAO-centrao/SOL')
+  cy.get('#aplicar-destino-transferencia').click()
 
 }
 
@@ -207,6 +248,7 @@ module.exports = {
   ItensTintometrico,
   ItensForaEstoque,
   ItensTransferencia,
+  FilialDestino,
   Itens,
   Cliente,
   FormaPagamento,
@@ -215,4 +257,5 @@ module.exports = {
   FinalizarOrcamentoApenasOrcamento,
   FinalizarOrcamentoConfirmado,
   EditarOrcamento
+
 }
