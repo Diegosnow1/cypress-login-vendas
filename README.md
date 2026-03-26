@@ -84,3 +84,10 @@ npx playwright codegen --test-id-attribute id http://URL_DO_SISTEMA
 npx cypress open
 npx cypress run
 npx cypress run --spec "cypress/e2e/login-vendas.cy.js"
+
+
+---disparar os 6 CTs do Teste_Geral em sequência com um único comando usando o padrão CT0*.cy.js, que já executa um após o outro automaticamente.--
+npx cypress run --spec "cypress/e2e/Teste_Geral/CT0*.cy.js"
+
+--- modo com interface visível (headed), mantendo os 6 CTs em sequência no mesmo comando para  acompanhar a execução na tela.--
+npx cypress run --headed --browser chrome --spec "cypress/e2e/Teste_Geral/CT0*.cy.js"
