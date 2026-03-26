@@ -43,7 +43,7 @@
  * ================================================================
  */ 
 
-const {
+/* const {
   fazerLoginMenuTransferencia,
   Itens,
   FilialDestino,
@@ -54,25 +54,25 @@ const {
   FinalizarOrcamentoApenasOrcamento,
   fazerLoginMenuVenda,
   
-} = require('../../support/help')
+} = require('../../support/help') */
 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT06-a - Pedido com Mais Itens no Orçamento e que Tenha Mais Casas Decimais,  salvar como  Apenas Orçamento', () => {
-    fazerLoginMenuVenda('ORC01', 'm')
-    Itens()
-    Cliente()
-    FormaPagamento()
-    Endereco()
-    FinalizarOrcamentoApenasOrcamento()
+    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.Itens()
+    cy.Cliente()
+    cy.FormaPagamento()
+    cy.Endereco()
+    cy.FinalizarOrcamentoApenasOrcamento()
 }) 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT06-b - Pedido com Mais Itens no Orçamento e que Tenha Mais Casas Decimais,  salvar como Orçamento Confirmado  ', () => {
-    fazerLoginMenuVenda('ORC01', 'm')
-    Itens()
-    Cliente()
-    FormaPagamento()
-    Endereco()
-    FinalizarOrcamentoConfirmado()
+    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.Itens()
+    cy.Cliente()
+    cy.FormaPagamento()
+    cy.Endereco()
+    cy.FinalizarOrcamentoConfirmado()
 
  
 }) 

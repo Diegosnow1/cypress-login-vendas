@@ -4,8 +4,8 @@ const esperar = () => {
 }
 
 const fazerLoginMenuVenda = (usuario, senha) => {
-  //cy.visit('http://localhost:9999/login')
-  cy.visit('http://10.10.11.138:9999/login')
+  cy.visit('http://localhost:9999/login')
+  //cy.visit('http://10.10.11.138:9999/login')
   cy.get('#Login_Usuario').type(usuario)
   cy.get('#Login_Senha').type(senha, { force: true })
   cy.get('#Login_BotaoEntrar').click()
@@ -150,7 +150,7 @@ const FormaPagamento = (page) => {
   cy.get('#IncluirEditarParcela_Valor').should('be.visible').clear().type('10,00', { force: true })
   //cy.wait(15000)
   cy.get('#IncluirEditarParcela_BotaoAplicar').click()
-  //cy.wait(15000)
+  cy.wait(15000)
 }
 
 
@@ -200,6 +200,13 @@ const EditarOrcamento = (page) => {
   cy.get('[name="SenhaVendedor"]').type('1')
   cy.get('#LoginAntigoVendedor_btnSubmit').click()
   esperar()
+
+
+  //VALIDAR SE EXISTE AS DUAS LINHAS COM AS PARCELAS (DINHEIRO E PIX)
+  cy.get('#orcamento_menu_formapagamento_react', { timeout: 30000 }).should('be.visible').click()
+  cy.contains('td', /^Dinheiro$/i, { timeout: 30000 }).should('be.visible')
+  cy.contains('td', /^PIX$/i, { timeout: 30000 }).should('be.visible')
+
   //adicinar outro produto
   cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
   esperar()
@@ -218,10 +225,6 @@ const EditarOrcamento = (page) => {
     .should('have.value', '3')
   cy.wait(15000)
 
-  //VALIDAR SE EXISTE AS DUAS LINHAS COM AS PARCELAS (DINHEIRO E PIX)
-  cy.get('#orcamento_menu_formapagamento_react', { timeout: 30000 }).should('be.visible').click()
-  cy.contains('td', /^Dinheiro$/i, { timeout: 30000 }).should('be.visible')
-  cy.contains('td', /^PIX$/i, { timeout: 30000 }).should('be.visible')
 
 }
 

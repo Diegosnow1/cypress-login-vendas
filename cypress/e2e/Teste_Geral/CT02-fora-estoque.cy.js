@@ -30,23 +30,23 @@
  *
  * ================================================================*/
 
-const {
+/* const {
   fazerLoginMenuVenda,
   ItensForaEstoque,
   Cliente,
   FormaPagamento,
   Endereco,
   FinalizarOrcamentoApenasOrcamento
-} = require('../../support/help')
+} = require('../../support/help') */
 
 describe('Orçamentos - Geral Marcio', () => {
  it('CT02 Fluxo  Venda completa produto fora de estoque', () => {
-    fazerLoginMenuVenda('ORC01', 'm')
-    ItensForaEstoque()
-    Cliente()
-    FormaPagamento()
-    Endereco()
-    FinalizarOrcamentoApenasOrcamento() 
+    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.ItensForaEstoque()
+    cy.Cliente()
+    cy.FormaPagamento()
+    cy.Endereco()
+    cy.FinalizarOrcamentoApenasOrcamento() 
 
 
 }) 

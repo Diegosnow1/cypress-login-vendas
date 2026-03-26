@@ -43,7 +43,7 @@
  * ================================================================
  */ 
 
- const {
+/*  const {
   fazerLoginMenuTransferencia,
   ItensTransferencia,
   FilialDestino,
@@ -53,23 +53,23 @@
   FinalizarOrcamentoConfirmado,
   FinalizarOrcamentoApenasOrcamento,
   
-} = require('../../support/help')
+} = require('../../support/help') */
 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT06-a - Pedido de Transferência como Orçamento Confirmado ', () => {
-    fazerLoginMenuTransferencia('ORC01', 'm')
-    ItensTransferencia()
-    FilialDestino()
-    FinalizarOrcamentoConfirmado()
+    cy.fazerLoginMenuTransferencia('ORC01', 'm')
+    cy.ItensTransferencia()
+    cy.FilialDestino()
+    cy.FinalizarOrcamentoConfirmado()
 
 })
 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT06-b - Pedido de Transferência como Apenas Orçamento', () => {
-    fazerLoginMenuTransferencia('ORC01', 'm')
-    ItensTransferencia()
-    FilialDestino()
-    FinalizarOrcamentoApenasOrcamento()
+    cy.fazerLoginMenuTransferencia('ORC01', 'm')
+    cy.ItensTransferencia()
+    cy.FilialDestino()
+    cy.FinalizarOrcamentoApenasOrcamento()
 
  
 }) 

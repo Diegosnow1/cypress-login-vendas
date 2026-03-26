@@ -1,25 +1,236 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+Cypress.Commands.add('esperar', () => {
+  cy.get('div.highlight', { timeout: 30000 }).should('not.exist')
+  cy.contains(/Carregando|Aguarde/i, { timeout: 30000 }).should('not.exist')
+})
+
+Cypress.Commands.add('fazerLoginMenuVenda', (usuario, senha) => {
+  cy.visit('http://10.10.10.197:9999/login')
+  //cy.visit('http://10.10.11.138:9999/login')
+  cy.get('#Login_Usuario').type(usuario)
+  cy.get('#Login_Senha').type(senha, { force: true })
+  cy.get('#Login_BotaoEntrar').click()
+
+  cy.esperar()
+
+  cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#MenuPrincipal_OrcamentoVenda', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="data-password"]').type('1')
+  cy.get('#SenhaVendedor_BotaoOk').click()
+
+  cy.esperar()
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).should('be.visible')
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).click({ force: true })
+  //cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
+})
+
+Cypress.Commands.add('fazerLoginMenuOutrasSaidas', (usuario, senha) => {
+  //cy.visit('http://localhost:9999/login')
+  cy.visit('http://10.10.10.197:9999/login')
+  cy.get('#Login_Usuario').type(usuario)
+  cy.get('#Login_Senha').type(senha, { force: true })
+  cy.get('#Login_BotaoEntrar').click()
+
+  cy.esperar()
+
+  cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#MenuPrincipal_OrcamentoOutrasSaidas', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="data-password"]').type('1')
+  cy.get('#SenhaVendedor_BotaoOk').click()
+
+  cy.esperar()
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).should('be.visible')
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).click({ force: true })
+  cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
+})
+
+Cypress.Commands.add('fazerLoginMenuTransferencia', (usuario, senha) => {
+  //cy.visit('http://localhost:9999/login')
+  cy.visit('http://10.10.10.197:9999/login')
+  cy.get('#Login_Usuario').type(usuario)
+  cy.get('#Login_Senha').type(senha, { force: true })
+  cy.get('#Login_BotaoEntrar').click()
+
+  cy.esperar()
+
+  cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#MenuPrincipal_OrcamentoTransferencia', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="data-password"]').type('1')
+  cy.get('#SenhaVendedor_BotaoOk').click()
+
+  cy.esperar()
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).should('be.visible')
+  cy.get('#iniciar-orcamento-botao-entrar', { timeout: 30000 }).click({ force: true })
+  //cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
+})
+
+Cypress.Commands.add('ItensTintometrico', (page) => {
+  cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="Codigo"]').type('20245')
+  cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
+  cy.get('#ItemPesquisaProduto_BotaoTinta_20245').should('be.visible').click()
+  cy.esperar()
+  cy.contains('button', /^Pesquisar$/i, { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()
+  cy.contains('#tabela-fornecedores td, #tabela-fornecedores div, #tabela-fornecedores span', /^ABSINTO$/i, { timeout: 30000 })
+    .should('be.visible')
+    .click()
+  cy.contains('button', /^OK$/i, { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()
+
+  cy.get(':nth-child(2) > #BarraFerramentasGrid_botaoOk').click()
+  cy.wait(8000)
+})
+
+Cypress.Commands.add('ItensForaEstoque', (page) => {
+  cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#PaginaPesquisaProduto_botaoProdutosForaDeEstoque').click()
+  cy.get('[name="Codigo"]').type('T0147')
+  cy.get('#ProdutosForaEstoque_BotaoPesquisar').click()
+  cy.get('#ProdutoForaEstoque_BotaoSelecionarTodos2').should('be.visible').click()
+  cy.get('#ProdutoForaEstoque_BotaoOk2').click()
+  cy.get('input[value="0,000"]', { timeout: 30000 })
+    .should('be.visible')
+    .clear()
+    .type('1,000', { force: true })
+  cy.contains('button', /^Aplicar$/i, { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()
+  cy.wait(8000)
+})
+
+Cypress.Commands.add('Itens', (page) => {
+  cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="Codigo"]').type('21101')
+  cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
+  cy.esperar()
+  cy.contains('button', /^OK$/i, { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()
+  cy.get('#input-Quantidade-item-Linha-1', { timeout: 30000 })
+    .should('be.visible')
+    .clear()
+    .type('2,000', { force: true })
+
+  cy.get('#barra-ferramentas-grid-itens__botao-incluir').click()
+  cy.get('[name="Codigo"]').type('24059')
+  cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
+  cy.esperar()
+  cy.contains('button', /^OK$/i, { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()
+  cy.get('#input-Quantidade-item-Linha-2', { timeout: 30000 })
+    .should('be.visible')
+    .clear()
+    .type('3,500', { force: true })
+  cy.wait(4000)
+})
+
+Cypress.Commands.add('Cliente', (page) => {
+  cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible').click()
+  cy.wait(4000)
+  cy.get('[name="CpfCnpj"]').type('26.333.047/0001-60')
+  cy.get('#PesquisaCliente_BarraFerramenta_BotaoPesquisar').click()
+  cy.get('#PesquisarCliente_Coluna_Nome_0').should('contain.text', 'COMERCIAL PEDROSA LTDA').click()
+  
+  cy.get('#PendenciaCliente_BotaoOk').click()
+  cy.wait(4000)
+})
+
+Cypress.Commands.add('FormaPagamento', (page) => {
+  cy.get('#orcamento_menu_formapagamento_react', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#AbaFormaDePagamento_incluir').click()
+  cy.get('[name="Tipo"]').select('À Vista')
+  cy.get('[name="IdTipoDocumento"]').select('PIX')
+  cy.get('#IncluirEditarParcela_Valor').should('be.visible').clear().type('10,00', { force: true })
+  //cy.wait(15000)
+  cy.get('#IncluirEditarParcela_BotaoAplicar').click()
+  cy.wait(8000)
+})
+
+Cypress.Commands.add('Endereco', (page) => {
+  cy.get('#orcamento_menu_enderecos_react', { timeout: 30000 }).should('be.visible').click()
+  //cy.wait(10000)
+})
+
+Cypress.Commands.add('responderPerguntaAjudaProfissionalSeExistir', () => {
+  const seletorPergunta = '[for="FinalizarOrcamento_Inconsistencias_TabelaPergunta_Dados_InputPergunta_#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#_Nao"] > [name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"]'
+
+  cy.get('body').then(($body) => {
+    if ($body.find(seletorPergunta).length) {
+      cy.get(seletorPergunta).click()
+    }
+  })
+})
+
+Cypress.Commands.add('FinalizarOrcamentoApenasOrcamento', (page) => {
+  cy.get('#orcamento_menu_finalizar', { timeout: 30000 }).should('be.visible').click()
+
+  cy.get('[name="FinalizarOrcamento_GrupoOpcaoOrcamento_ApenasOrcando"]').click()
+  cy.wait(8000)
+  cy.responderPerguntaAjudaProfissionalSeExistir()
+  cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento').click()
+  //VALIDAR SE O ORÇAMENTO FOI FINALIZADO COM SUCESSO, MENSAGEM DE ORÇAMENTO CONCLUÍDO
+  cy.contains(/Orçamento Concluído/i, { timeout: 30000 }).should('be.visible')
+})
+
+Cypress.Commands.add('FinalizarOrcamentoConfirmado', (page) => {
+  cy.get('#orcamento_menu_finalizar', { timeout: 30000 }).should('be.visible').click()
+  cy.wait(8000)
+  cy.get('[name="FinalizarOrcamento_GrupoOpcaoOrcamento_OrcamentoConfirmado"]').click()
+  cy.wait(8000)
+  cy.responderPerguntaAjudaProfissionalSeExistir()
+  cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento').click()
+  cy.wait(8000)
+  //VALIDAR SE O ORÇAMENTO FOI FINALIZADO COM SUCESSO, MENSAGEM DE ORÇAMENTO CONCLUÍDO
+  cy.contains(/Orçamento Concluído/i, { timeout: 30000 }).should('be.visible')
+})
+
+Cypress.Commands.add('EditarOrcamento', (page) => {
+  cy.get('#OrcamentoConcluido_LinkNumeroOrcamento', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="SenhaVendedor"]').type('1')
+  cy.get('#LoginAntigoVendedor_btnSubmit').click()
+  cy.esperar()
+
+  //VALIDAR SE EXISTE AS DUAS LINHAS COM AS PARCELAS (DINHEIRO E PIX)
+  cy.get('#orcamento_menu_formapagamento_react', { timeout: 30000 }).should('be.visible').click()
+  cy.contains('td', /^Dinheiro$/i, { timeout: 30000 }).should('be.visible')
+  cy.contains('td', /^PIX$/i, { timeout: 30000 }).should('be.visible')
+
+  //adicinar outro produto
+  cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
+  cy.esperar()
+  cy.get('#grid-itens__barra-ferramentas__input-referencia')
+    .should('be.visible')
+    .clear()
+    .type('01242')
+  cy.get('#grid-itens__barra-ferramenta__botao-adicionar').click()
+  cy.get('#input-Quantidade-item-Linha-1', { timeout: 30000 })
+    .should('be.visible')
+    .clear()
+    .type('2,000', { force: true })
+  //VALIDAR SE O TOTAL DE ITENS FOI ATUALIZADO PARA 3,
+  cy.get('#Totalizador_QuantidadeItens', { timeout: 30000 })
+    .should('be.visible')
+    .should('have.value', '3')
+  cy.wait(8000)
+})
+
+Cypress.Commands.add('ItensTransferencia', (page) => {
+  cy.get('[name="Codigo"]').type('21101').click()
+  cy.get('#PaginaPesquisaProduto_botaoPesquisarInserirContinuar').click()
+  cy.get('#PaginaPesquisaProdutoContainer_Breadcrumb_BtnVoltar').click()
+})
+
+Cypress.Commands.add('FilialDestino', (page) => {
+  cy.get('#orcamento_menu_destino').click()
+  cy.get('[name="Destino"]').select('02-02 - CAPARAO-centrao/SOL')
+  cy.get('[name="Destino"] option:selected').should('contain.text', '02-02 - CAPARAO-centrao/SOL')
+  cy.get('#aplicar-destino-transferencia').click()
+})

@@ -31,28 +31,25 @@
  *
  * ================================================================*/
 
-const {
+/* const {
   fazerLoginMenuVenda,
   ItensTintometrico,
   Cliente,
   FormaPagamento,
   Endereco,
   FinalizarOrcamentoConfirmado
-} = require('../../support/help')
+} = require('../../support/help') */
 
 describe('Orçamentos - Geral Marcio', () => {
-  it('CT01 Fluxo  Venda completa produto tintometrico', () => {
-    fazerLoginMenuVenda('ORC01', 'm')
-    ItensTintometrico()
-    Cliente()
-    FormaPagamento()
-    Endereco()
-    FinalizarOrcamentoConfirmado()
-
- 
-}) 
-}) 
-
+  it('CT01 Fluxo Venda completa produto tintometrico', () => {
+    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.ItensTintometrico()
+    cy.Cliente()
+    cy.FormaPagamento()
+    cy.Endereco()
+    cy.FinalizarOrcamentoConfirmado()
+  })
+})
 
 
 

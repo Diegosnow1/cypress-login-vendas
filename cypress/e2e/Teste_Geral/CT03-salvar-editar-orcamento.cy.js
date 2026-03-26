@@ -10,19 +10,17 @@
  * ----------------------------------------------------------------
  * --REGRAS IMPORTANTES (Recomendação do DEV) de nº 2
  * ----------------------------------------------------------------
- * -sempre criar um pedido, salvar, editar, alterar, salvar novamente
+ * -sempre criar um pedido, salvar, editar, alterar, salvar novamente e ver se as condições de pagamento permanecem inalteradas antes de inserir os produtos adicionais no momento da edição.
  *
  * ----------------------------------------------------------------
  * --OBJETIVO DO TESTE
  * ----------------------------------------------------------------
- * (CT03)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) e ( orçamento confirmado).
+ * (CT03)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) e ( orçamento confirmado) e verificar se as condições de pagamento permanecem inalteradas antes de inserir os produtos adicionais no momento da edição.
  *
  * ----------------------------------------------------------------
  * --RESULTADO ESPERADO
  * ----------------------------------------------------------------
- * - Ao criar, salvar o pedido e logo entrar novamente e editar, após o sistema deve finalizar o orçamento com a situação de apenas orçando  e  orçamento confirmado,processo sem erros.
- *
- *
+ * validaçao 1 = pedido deve manter as mesmas condições de pagamento que foram informadas no momento da criação do orçamento,antes de inserir os produtos adicionais no momento da edição .
  *
  * ----------------------------------------------------------------
  * --COMANDOS SQL AUXILIARES (se aplicável)
@@ -31,7 +29,7 @@
  *
  * ================================================================*/
 
-const {
+/* const {
   fazerLoginMenuVenda,
   Itens,
   Cliente,
@@ -41,30 +39,30 @@ const {
   EditarOrcamento,
   FinalizarOrcamentoConfirmado,
   
-} = require('../../support/help')
+} = require('../../support/help') */
 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT03-a)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) ', () => {
-    fazerLoginMenuVenda('ORC01', 'm')
-    Itens()
-    Cliente()
-    FormaPagamento()
-    Endereco()
-    FinalizarOrcamentoApenasOrcamento()
-    EditarOrcamento()
-    FinalizarOrcamentoApenasOrcamento() 
+    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.Itens()
+    cy.Cliente()
+    cy.FormaPagamento()
+    cy.Endereco()
+    cy.FinalizarOrcamentoApenasOrcamento()
+    cy.EditarOrcamento()
+    cy.FinalizarOrcamentoApenasOrcamento() 
 })  
 describe('Orçamentos - Geral Marcio', () => {
-/*   it('CT03-b)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como  ( orçamento confirmado) ', () => {
-    fazerLoginMenuVenda('ORC01', 'm')
-    Itens()
-    Cliente()
-    FormaPagamento()
-    Endereco()
-    FinalizarOrcamentoConfirmado()
-    EditarOrcamento()
-    FinalizarOrcamentoConfirmado() 
-})  */
+   it('CT03-b)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como  ( orçamento confirmado) ', () => {
+    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.Itens()
+    cy.Cliente()
+    cy.FormaPagamento()
+    cy.Endereco()
+    cy.FinalizarOrcamentoConfirmado()
+    cy.EditarOrcamento()
+    cy.FinalizarOrcamentoConfirmado() 
+})  
 }) 
 }) 
 

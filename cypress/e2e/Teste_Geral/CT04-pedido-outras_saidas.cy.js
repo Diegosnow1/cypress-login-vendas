@@ -45,7 +45,7 @@
  */ 
 
 
- const {
+/*  const {
   fazerLoginMenuOutrasSaidas,
   Itens,
   Cliente,
@@ -54,25 +54,25 @@
   FinalizarOrcamentoConfirmado,
   FinalizarOrcamentoApenasOrcamento,
   
-} = require('../../support/help')
+} = require('../../support/help') */
 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT04-a - Pedido Outras Saídas como Orçamento  Apenas Orçamento', () => {
-    fazerLoginMenuOutrasSaidas('ORC01', 'm')
-    Itens()
-    Cliente()
-    Endereco()
-    FinalizarOrcamentoApenasOrcamento()
+    cy.fazerLoginMenuOutrasSaidas('ORC01', 'm')
+    cy.Itens()
+    cy.Cliente()
+    cy.Endereco()
+    cy.FinalizarOrcamentoApenasOrcamento()
 
  
 }) 
 describe('Orçamentos - Geral Marcio', () => {
   it('CT04-b - Pedido Outras Saídas como Orçamento Confirmado ', () => {
-    fazerLoginMenuOutrasSaidas('ORC01', 'm')
-    Itens()
-    Cliente()
-    Endereco()
-    FinalizarOrcamentoConfirmado()
+    cy.fazerLoginMenuOutrasSaidas('ORC01', 'm')
+    cy.Itens()
+    cy.Cliente()
+    cy.Endereco()
+    cy.FinalizarOrcamentoConfirmado()
 }) 
 
 }) 
