@@ -51,6 +51,15 @@ Cypress.Commands.add('fazerLoginMenuTransferencia', (senha_vendedor) => {
   //cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
 })
 
+Cypress.Commands.add('PesquisarOrcamento', (senha_vendedor) => {
+  cy.get('#MenuPrincipal_PesquisaOrcamento', { timeout: 30000 }).should('be.visible').click()
+  cy.get('[name="data-password"]').type(senha_vendedor)
+  cy.get('#SenhaVendedor_BotaoOk').click()
+
+  cy.esperar()
+
+})
+
 Cypress.Commands.add('ItensTintometrico', (page) => {
   cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
   cy.get('[name="Codigo"]').type('20245')
@@ -221,6 +230,13 @@ Cypress.Commands.add('FilialDestino', (page) => {
   cy.get('[name="Destino"]').select('02-02 - CAPARAO-centrao/SOL')
   cy.get('[name="Destino"] option:selected').should('contain.text', '02-02 - CAPARAO-centrao/SOL')
   cy.get('#aplicar-destino-transferencia').click()
+})
+
+
+Cypress.Commands.add('InformarOrcamentoDuplicar', (numped) => {
+ cy.get('[name="NumeroPedido"]').click().type(numped)
+ cy.get('#PesquisaOrcamento_BotaoPesquisar').click()
+ 
 })
 
 Cypress.Commands.add('verificarErroSistema', () => {

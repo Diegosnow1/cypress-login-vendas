@@ -1,6 +1,6 @@
 /**
  * ================================================================
- * --CASO DE TESTE: CT07 - Pedido com Mais Itens e Casas Decimais
+ * --CASO DE TESTE: CT07 - Duplicar Pedido
  * ================================================================
  *
  * Ambiente: Homologação
@@ -8,11 +8,10 @@
  * Versão da aplicação: master
  *
  * ----------------------------------------------------------------
- * --REGRAS IMPORTANTES (Recomendação do DEV) nº 4 
+ * --REGRAS IMPORTANTES (Recomendação do DEV) nº ?
  * ----------------------------------------------------------------
  * Sempre realizar pelo menos:
- * - 1 pedido com mais itens no orçamento e  que tenha mais casas decimais
- *
+ * - sempre duplicar um orçamento e salvar como orçamento confirmado e apenas orçamento
  * Essas validações são críticas, pois alterações podem impactar
  * essa funcionalidade e gerar erro apenas no cliente final.
  *
@@ -24,16 +23,15 @@
  * - Apenas Orçamento
  *
  * Validar que não ocorram erros ao:
- * - Criar pedido com mais itens no orçamento e que tenha mais casas decimais
- * - Salvar o orçamento confirmado e apenas orçamento sem erros e com sucesso.
+ * - Duplicar um orçamento e salvar como orçamento confirmado e apenas orçamento
  *
  * ----------------------------------------------------------------
  * --RESULTADO ESPERADO
  * ----------------------------------------------------------------
- * Ao realizar um pedido com mais itens no orçamento e que tenha mais casas decimais:
- * - O orçamento deve ser finalizado com a situação
- *   "Orçamento Confirmado" e de "apenas orçamento"
- * - O sistema não deve apresentar erros no fluxo e salvar o orçamento com sucesso.
+ * Ao duplicar um orçamento:
+ * - O orçamento deve ser finalizado com um numero de orçamento com a situação de:
+ *   "Orçamento Confirmado" e de "apenas orçamento" em cada teste.
+ * - O sistema não deve apresentar erros durante o processo, como exemplo apresentando o toast com a mensagem de (houve um erro desconhecido), e deve salvar o orçamento com sucesso.
  *
  * ----------------------------------------------------------------
  * --COMANDOS SQL AUXILIARES (se aplicável)
@@ -46,21 +44,21 @@
 
   describe('Orçamentos - Geral Marcio', () => {
 
-    beforeEach(() => {
-    cy.fazerLoginModuloVendas('ORC01', 'm')
+  beforeEach(() => {
+  cy.fazerLoginModuloVendas('ORC01', 'm')
     
   })
   afterEach(() => {
     cy.verificarErroSistema()
   })
 
-  it('CT07-a Duplicar Orçamento e salvar como apenas orçamento', () => {
-    cy.fazerLoginMenuVenda('1')
-    cy.Itens()
-    cy.Cliente()
-    cy.FormaPagamento()
-    cy.Endereco()
-    cy.FinalizarOrcamentoApenasOrcamento()
+
+
+  it.only('CT07-a Duplicar Orçamento e salvar como apenas orçamento', () => {
+    cy.PesquisarOrcamento('1')
+    cy.InformarOrcamentoDuplicar('2491130')
+
+    //cy.FinalizarOrcamentoApenasOrcamento()
   }) 
 
   describe('Orçamentos - Geral Marcio', () => {
@@ -73,13 +71,12 @@
     cy.verificarErroSistema()
   })
 
+
+
   it('CT07-b Duplicar Orçamento e salvar como orçamento confirmado', () => {
-    cy.fazerLoginMenuVenda('1')
-    cy.Itens()
-    cy.Cliente()
-    cy.FormaPagamento()
-    cy.Endereco()
-    cy.FinalizarOrcamentoConfirmado()
+    cy.PesquisarOrcamento('1')
+
+    //cy.FinalizarOrcamentoConfirmado()
 
  
  }) 
