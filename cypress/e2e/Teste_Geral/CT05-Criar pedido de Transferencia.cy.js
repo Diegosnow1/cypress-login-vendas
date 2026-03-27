@@ -55,18 +55,34 @@
   
 } = require('../../support/help') */
 
-describe('Orçamentos - Geral Marcio', () => {
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
   it('CT06-a - Pedido de Transferência como Orçamento Confirmado ', () => {
-    cy.fazerLoginMenuTransferencia('ORC01', 'm')
+    cy.fazerLoginMenuTransferencia('1')
     cy.ItensTransferencia()
     cy.FilialDestino()
     cy.FinalizarOrcamentoConfirmado()
 
 })
 
-describe('Orçamentos - Geral Marcio', () => {
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
   it('CT06-b - Pedido de Transferência como Apenas Orçamento', () => {
-    cy.fazerLoginMenuTransferencia('ORC01', 'm')
+    cy.fazerLoginMenuTransferencia('1')
     cy.ItensTransferencia()
     cy.FilialDestino()
     cy.FinalizarOrcamentoApenasOrcamento()

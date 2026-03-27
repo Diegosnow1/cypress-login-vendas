@@ -3,7 +3,7 @@ Cypress.Commands.add('esperar', () => {
   cy.contains(/Carregando|Aguarde/i, { timeout: 30000 }).should('not.exist')
 })
 
-Cypress.Commands.add('fazerLoginMenuVenda', (usuario, senha) => {
+Cypress.Commands.add('fazerLoginModuloVendas', (usuario, senha) => {
   cy.visit('http://10.10.10.197:9999/login')
   //cy.visit('http://10.10.11.138:9999/login')
   cy.get('#Login_Usuario').type(usuario)
@@ -13,8 +13,12 @@ Cypress.Commands.add('fazerLoginMenuVenda', (usuario, senha) => {
   cy.esperar()
 
   cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
+
+  })
+
+Cypress.Commands.add('fazerLoginMenuVenda', (senha_Vendedor) => {
   cy.get('#MenuPrincipal_OrcamentoVenda', { timeout: 30000 }).should('be.visible').click()
-  cy.get('[name="data-password"]').type('1')
+  cy.get('[name="data-password"]').type(senha_Vendedor)
   cy.get('#SenhaVendedor_BotaoOk').click()
 
   cy.esperar()
@@ -23,18 +27,11 @@ Cypress.Commands.add('fazerLoginMenuVenda', (usuario, senha) => {
   //cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
 })
 
-Cypress.Commands.add('fazerLoginMenuOutrasSaidas', (usuario, senha) => {
-  //cy.visit('http://localhost:9999/login')
-  cy.visit('http://10.10.10.197:9999/login')
-  cy.get('#Login_Usuario').type(usuario)
-  cy.get('#Login_Senha').type(senha, { force: true })
-  cy.get('#Login_BotaoEntrar').click()
 
-  cy.esperar()
 
-  cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
+  Cypress.Commands.add('fazerLoginMenuOutrasSaidas', (senha_vendedor) => {
   cy.get('#MenuPrincipal_OrcamentoOutrasSaidas', { timeout: 30000 }).should('be.visible').click()
-  cy.get('[name="data-password"]').type('1')
+  cy.get('[name="data-password"]').type(senha_vendedor)
   cy.get('#SenhaVendedor_BotaoOk').click()
 
   cy.esperar()
@@ -43,18 +40,9 @@ Cypress.Commands.add('fazerLoginMenuOutrasSaidas', (usuario, senha) => {
   cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible')
 })
 
-Cypress.Commands.add('fazerLoginMenuTransferencia', (usuario, senha) => {
-  //cy.visit('http://localhost:9999/login')
-  cy.visit('http://10.10.10.197:9999/login')
-  cy.get('#Login_Usuario').type(usuario)
-  cy.get('#Login_Senha').type(senha, { force: true })
-  cy.get('#Login_BotaoEntrar').click()
-
-  cy.esperar()
-
-  cy.get('#abrirMenuPrincipal', { timeout: 30000 }).should('be.visible').click()
+Cypress.Commands.add('fazerLoginMenuTransferencia', (senha_vendedor) => {
   cy.get('#MenuPrincipal_OrcamentoTransferencia', { timeout: 30000 }).should('be.visible').click()
-  cy.get('[name="data-password"]').type('1')
+  cy.get('[name="data-password"]').type(senha_vendedor)
   cy.get('#SenhaVendedor_BotaoOk').click()
 
   cy.esperar()
@@ -90,7 +78,7 @@ Cypress.Commands.add('ItensForaEstoque', (page) => {
   cy.get('#PaginaPesquisaProduto_botaoProdutosForaDeEstoque').click()
   cy.get('[name="Codigo"]').type('T0147')
   cy.get('#ProdutosForaEstoque_BotaoPesquisar').click()
-  cy.get('#ProdutoForaEstoque_BotaoSelecionarTodos2').should('be.visible').click()
+  cy.get('#TabelaProdForaEstoque_Codigo_0').should('be.visible').click()
   cy.get('#ProdutoForaEstoque_BotaoOk2').click()
   cy.get('input[value="0,000"]', { timeout: 30000 })
     .should('be.visible')
@@ -149,7 +137,7 @@ Cypress.Commands.add('FormaPagamento', (page) => {
   cy.get('[name="Tipo"]').select('À Vista')
   cy.get('[name="IdTipoDocumento"]').select('PIX')
   cy.get('#IncluirEditarParcela_Valor').should('be.visible').clear().type('10,00', { force: true })
-  //cy.wait(15000)
+  cy.wait(1000)
   cy.get('#IncluirEditarParcela_BotaoAplicar').click()
   cy.wait(8000)
 })
@@ -233,4 +221,12 @@ Cypress.Commands.add('FilialDestino', (page) => {
   cy.get('[name="Destino"]').select('02-02 - CAPARAO-centrao/SOL')
   cy.get('[name="Destino"] option:selected').should('contain.text', '02-02 - CAPARAO-centrao/SOL')
   cy.get('#aplicar-destino-transferencia').click()
+})
+
+Cypress.Commands.add('verificarErroSistema', () => {
+  cy.get('body').then(($body) => {
+    if ($body.text().toLowerCase().includes('houve um erro desconhecido')) {
+      throw new Error('🚨 ERRO DO SISTEMA DETECTADO: houve um erro desconhecido')
+    }
+  })
 })

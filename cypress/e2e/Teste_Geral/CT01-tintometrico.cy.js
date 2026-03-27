@@ -41,15 +41,24 @@
 } = require('../../support/help') */
 
 describe('Orçamentos - Geral Marcio', () => {
+
+  beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
+
   it('CT01 Fluxo Venda completa produto tintometrico', () => {
-    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.fazerLoginMenuVenda('1')
     cy.ItensTintometrico()
     cy.Cliente()
     cy.FormaPagamento()
     cy.Endereco()
     cy.FinalizarOrcamentoConfirmado()
   })
-})
 
+})
 
 

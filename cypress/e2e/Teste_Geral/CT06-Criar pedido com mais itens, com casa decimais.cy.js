@@ -56,18 +56,35 @@
   
 } = require('../../support/help') */
 
-describe('Orçamentos - Geral Marcio', () => {
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
   it('CT06-a - Pedido com Mais Itens no Orçamento e que Tenha Mais Casas Decimais,  salvar como  Apenas Orçamento', () => {
-    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.fazerLoginMenuVenda('1')
     cy.Itens()
     cy.Cliente()
     cy.FormaPagamento()
     cy.Endereco()
     cy.FinalizarOrcamentoApenasOrcamento()
 }) 
-describe('Orçamentos - Geral Marcio', () => {
+
+   describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
   it('CT06-b - Pedido com Mais Itens no Orçamento e que Tenha Mais Casas Decimais,  salvar como Orçamento Confirmado  ', () => {
-    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.fazerLoginMenuVenda('1')
     cy.Itens()
     cy.Cliente()
     cy.FormaPagamento()

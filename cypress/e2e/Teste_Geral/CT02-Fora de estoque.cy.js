@@ -39,9 +39,17 @@
   FinalizarOrcamentoApenasOrcamento
 } = require('../../support/help') */
 
-describe('Orçamentos - Geral Marcio', () => {
- it('CT02 Fluxo  Venda completa produto fora de estoque', () => {
-    cy.fazerLoginMenuVenda('ORC01', 'm')
+   describe('Orçamentos - Geral Marcio', () => {
+
+     beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
+it('CT02 Fluxo  Venda completa produto fora de estoque', () => {
+    cy.fazerLoginMenuVenda('1')
     cy.ItensForaEstoque()
     cy.Cliente()
     cy.FormaPagamento()

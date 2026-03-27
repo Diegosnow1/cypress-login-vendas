@@ -56,9 +56,17 @@
   
 } = require('../../support/help') */
 
-describe('Orçamentos - Geral Marcio', () => {
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
   it('CT04-a - Pedido Outras Saídas como Orçamento  Apenas Orçamento', () => {
-    cy.fazerLoginMenuOutrasSaidas('ORC01', 'm')
+    cy.fazerLoginMenuOutrasSaidas('1')
     cy.Itens()
     cy.Cliente()
     cy.Endereco()
@@ -66,9 +74,17 @@ describe('Orçamentos - Geral Marcio', () => {
 
  
 }) 
-describe('Orçamentos - Geral Marcio', () => {
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
   it('CT04-b - Pedido Outras Saídas como Orçamento Confirmado ', () => {
-    cy.fazerLoginMenuOutrasSaidas('ORC01', 'm')
+    cy.fazerLoginMenuOutrasSaidas('1')
     cy.Itens()
     cy.Cliente()
     cy.Endereco()

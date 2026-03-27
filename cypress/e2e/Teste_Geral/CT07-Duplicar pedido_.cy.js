@@ -44,18 +44,37 @@
  */ 
 
 
-describe('Orçamentos - Geral Marcio', () => {
-  it('CT07-a - incluir uma parcela a mais no orcamento, apos gravar editar e veja se esta igual ao q foi informado', () => {
-    cy.fazerLoginMenuVenda('ORC01', 'm')
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
+
+  it('CT07-a Duplicar Orçamento e salvar como apenas orçamento', () => {
+    cy.fazerLoginMenuVenda('1')
     cy.Itens()
     cy.Cliente()
     cy.FormaPagamento()
     cy.Endereco()
     cy.FinalizarOrcamentoApenasOrcamento()
-}) 
-describe('Orçamentos - Geral Marcio', () => {
-  it('CT07-b - incluir uma parcela a mais no orcamento, apos gravar editar parecl e veja se esta igual ao q foi informado  ', () => {
-    cy.fazerLoginMenuVenda('ORC01', 'm')
+  }) 
+
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
+
+  it('CT07-b Duplicar Orçamento e salvar como orçamento confirmado', () => {
+    cy.fazerLoginMenuVenda('1')
     cy.Itens()
     cy.Cliente()
     cy.FormaPagamento()
@@ -63,6 +82,6 @@ describe('Orçamentos - Geral Marcio', () => {
     cy.FinalizarOrcamentoConfirmado()
 
  
-}) 
-})
-}) 
+ }) 
+ })
+ }) 

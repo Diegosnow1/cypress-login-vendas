@@ -41,9 +41,17 @@
   
 } = require('../../support/help') */
 
-describe('Orçamentos - Geral Marcio', () => {
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
   it('CT03-a)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) ', () => {
-    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.fazerLoginMenuVenda('1')
     cy.Itens()
     cy.Cliente()
     cy.FormaPagamento()
@@ -52,9 +60,17 @@ describe('Orçamentos - Geral Marcio', () => {
     cy.EditarOrcamento()
     cy.FinalizarOrcamentoApenasOrcamento() 
 })  
-describe('Orçamentos - Geral Marcio', () => {
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
    it('CT03-b)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como  ( orçamento confirmado) ', () => {
-    cy.fazerLoginMenuVenda('ORC01', 'm')
+    cy.fazerLoginMenuVenda('1')
     cy.Itens()
     cy.Cliente()
     cy.FormaPagamento()
