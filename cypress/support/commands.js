@@ -146,7 +146,7 @@ Cypress.Commands.add('FormaPagamento', (page) => {
   cy.get('[name="Tipo"]').select('À Vista')
   cy.get('[name="IdTipoDocumento"]').select('PIX')
   cy.get('#IncluirEditarParcela_Valor').should('be.visible').clear().type('10,00', { force: true })
-  cy.wait(1000)
+  cy.wait(8000)
   cy.get('#IncluirEditarParcela_BotaoAplicar').click()
   cy.wait(8000)
 })
