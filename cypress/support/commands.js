@@ -132,7 +132,7 @@ Cypress.Commands.add('Itens', (page) => {
 Cypress.Commands.add('Cliente', (page) => {
   cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible').click()
   cy.wait(4000)
-  cy.get('[name="CpfCnpj"]').type('26.333.047/0001-60')
+  cy.get('[name="CpfCnpj"]').type('00.000.000/0001-00')
   cy.get('#PesquisaCliente_BarraFerramenta_BotaoPesquisar').click()
   cy.get('#PesquisarCliente_Coluna_Nome_0').should('contain.text', 'COMERCIAL PEDROSA LTDA').click()
   
