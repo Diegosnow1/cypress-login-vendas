@@ -1,93 +1,134 @@
-#  Cols QA — Cypress e Git
-----------------------------------------------------------------------------------------------------------
+# 🧪 Projeto de Automação de Testes – Vendas (QA)
 
-##  Modelo de Ficha / Caso de Teste
+Este projeto contém testes automatizados end-to-end utilizando Cypress, com foco em cenários reais de negócio.
 
-<!-- /**
+Os testes cobrem funcionalidades críticas do sistema, como:
+
+* Criação de pedidos
+* Transferências
+* Orçamentos
+* Validações de regras de negócio
+
+---
+
+## 🚀 Tecnologias utilizadas
+
+* Cypress
+* JavaScript
+* Git
+
+---
+
+## 📂 Estrutura dos testes
+
+Os testes estão organizados por casos de teste (CTs), simulando situações reais:
+
+* CT01 – Tintométrico
+* CT02 – Fora de estoque
+* CT03 – Criar pedido / editar orçamento / parcelas
+* CT04 – Outras saídas
+* CT05 – Transferência
+* CT06 – Pedido com múltiplos itens
+* CT07 – Duplicação de pedido
+
+---
+
+## 🧠 Modelo de Caso de Teste
+
+Todos os testes seguem um padrão estruturado:
+
+```js
+/**
  * ================================================================
- * --CASO DE TESTE: CT05 - Pedido Outras Saídas
+ * CASO DE TESTE: CT05 - Pedido Outras Saídas
  * ================================================================
  *
  * Ambiente: Homologação
  * Banco de Dados: Centrao_Diego
  * Versão da aplicação: master
  *
- * ----------------------------------------------------------------
- * --REGRAS IMPORTANTES (Recomendação do DEV) nº 3 
- * ----------------------------------------------------------------
- * Sempre realizar pelo menos:
- * - 1 pedido de Outras Saídas
- * - 1 transferência
+ * ---------------------------------------------------------------
+ * REGRAS IMPORTANTES
+ * ---------------------------------------------------------------
+ * Sempre validar:
+ * - Pedido de Outras Saídas
+ * - Transferência
  *
- * Essas validações são críticas, pois alterações podem impactar
- * essa funcionalidade e gerar erro apenas no cliente final.
+ * ---------------------------------------------------------------
+ * OBJETIVO
+ * ---------------------------------------------------------------
+ * Validar criação e finalização do orçamento
  *
- * ----------------------------------------------------------------
- * --OBJETIVO DO TESTE
- * ----------------------------------------------------------------
- * Verificar se o sistema finaliza o orçamento com a situação:
- * - Orçamento Confirmado
- * - Apenas Orçamento
+ * ---------------------------------------------------------------
+ * RESULTADO ESPERADO
+ * ---------------------------------------------------------------
+ * - Orçamento confirmado
+ * - Sem erros no fluxo
  *
- * Validar que não ocorram erros ao:
- * - Criar pedido de Outras Saídas
- * - Salvar o orçamento
- *
- * ----------------------------------------------------------------
- * --RESULTADO ESPERADO
- * ----------------------------------------------------------------
- * Ao realizar um pedido de Outras Saídas:
- * - O orçamento deve ser finalizado com a situação
- *   "Orçamento Confirmado"
- * - O sistema não deve apresentar erros no fluxo
- *
- * ----------------------------------------------------------------
- * --COMANDOS SQL AUXILIARES (se aplicável)
- * ----------------------------------------------------------------
- * -- SQL
- *
- * ================================================================
- */ -->
+ * ---------------------------------------------------------------
+ */
+```
 
-----------------------------------------------------------------------------------------------------------
+---
 
-⬇️ Git —  / Atualizar código 
+## 🔄 Git — Atualizar código
 
+```bash
 git status
 git add .
 git commit -m "mensagem"
 git push
+```
+
 👉 SUBIR = sua máquina → GitHub
 
-----------------------------------------------------------------------------------------------------------
+---
 
-⬇️ Git —  / Atualizar código
+## ⬇️ Git — Baixar / Atualizar projeto
 
-Projeto já existe:
+### Projeto já existente
+
+```bash
 git pull
-Projeto do zero:
+```
+
+### Clonar projeto
+
+```bash
 git clone https://github.com/Diegosnow1/vendas-e2e-play.git
+```
 
-----------------------------------------------------------------------------------------------------------
+---
 
-🧪 Playwright — Comandos principais
+## 🧪 Playwright — Comandos principais
+
+```bash
 npx playwright test
 npx playwright test tests/Formatto.spec.ts
 npx playwright test --debug
 npx playwright show-report
 npx playwright codegen http://URL_DO_SISTEMA
 npx playwright codegen --test-id-attribute id http://URL_DO_SISTEMA
+```
 
-----------------------------------------------------------------------------------------------------------
+---
 
-❄️ Cypress — Comandos principais
+## ❄️ Cypress — Comandos principais
+
+```bash
 npx cypress open
 npx cypress run
 npx cypress run --spec "cypress/e2e/login-vendas.cy.js"
+```
 
+### ▶️ Executar todos os CTs em sequência
 
----disparar os 6 CTs do Teste_Geral em sequência com um único comando usando o padrão CT0*.cy.js, que já executa um após o outro automaticamente.--
+```bash
 npx cypress run --spec "cypress/e2e/Teste_Geral/CT0*.cy.js"
+```
 
---- modo com interface visível (headed), mantendo os 6 CTs em sequência no mesmo comando para  acompanhar a execução na tela.--
+### ▶️ Execução com interface (modo visual)
+
+```bash
 npx cypress run --headed --browser chrome --spec "cypress/e2e/Teste_Geral/CT0*.cy.js"
+```

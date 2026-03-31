@@ -1,6 +1,6 @@
- /**
+/**
  * ================================================================
- * --CASO DE TESTE: CT03 - Editar Apenas Orçamento
+ * --CASO DE TESTE: CT07 - Pedido com Mais Itens e Casas Decimais
  * ================================================================
  *
  * Ambiente: Homologação
@@ -8,38 +8,42 @@
  * Versão da aplicação: master
  *
  * ----------------------------------------------------------------
- * --REGRAS IMPORTANTES (Recomendação do DEV) de nº 2
+ * --REGRAS IMPORTANTES (Recomendação do DEV) nº 4 
  * ----------------------------------------------------------------
- * -sempre criar um pedido, salvar, editar, alterar, salvar novamente e ver se as condições de pagamento permanecem inalteradas antes de inserir os produtos adicionais no momento da edição.
+ * Sempre realizar pelo menos:
+ * - 1 pedido com mais itens no orçamento e  que tenha mais casas decimais
+ *
+ * Essas validações são críticas, pois alterações podem impactar
+ * essa funcionalidade e gerar erro apenas no cliente final.
  *
  * ----------------------------------------------------------------
  * --OBJETIVO DO TESTE
  * ----------------------------------------------------------------
- * (CT03)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) e ( orçamento confirmado) e verificar se as condições de pagamento permanecem inalteradas antes de inserir os produtos adicionais no momento da edição.
+ * Verificar se o sistema finaliza o orçamento com a situação:
+ * - Orçamento Confirmado
+ * - Apenas Orçamento
+ *
+ * Validar que não ocorram erros ao:
+ * - Criar pedido com mais itens no orçamento e que tenha mais casas decimais
+ * - Salvar o orçamento confirmado e apenas orçamento sem erros e com sucesso.
  *
  * ----------------------------------------------------------------
  * --RESULTADO ESPERADO
  * ----------------------------------------------------------------
- * validaçao 1 = pedido deve manter as mesmas condições de pagamento que foram informadas no momento da criação do orçamento,antes de inserir os produtos adicionais no momento da edição .
+ * Ao realizar um pedido com mais itens no orçamento e que tenha mais casas decimais:
+ * - O orçamento deve ser finalizado com a situação
+ *   "Orçamento Confirmado" e de "apenas orçamento"
+ * - O sistema não deve apresentar erros no fluxo e salvar o orçamento com sucesso.
  *
  * ----------------------------------------------------------------
  * --COMANDOS SQL AUXILIARES (se aplicável)
  * ----------------------------------------------------------------
  * -- SQL
  *
- * ================================================================*/
+ * ================================================================
+ */ 
 
-/* const {
-  fazerLoginMenuVenda,
-  Itens,
-  Cliente,
-  FormaPagamento,
-  Endereco,
-  FinalizarOrcamentoApenasOrcamento,
-  EditarOrcamento,
-  FinalizarOrcamentoConfirmado,
-  
-} = require('../../support/help') */
+
 
   describe('Orçamentos - Geral Marcio', () => {
 
@@ -50,17 +54,16 @@
   afterEach(() => {
     cy.verificarErroSistema()
   })
-  it('CT03-a)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como (apenas orçamento) ', () => {
+  it('CT06-a - Pedido com Mais Itens no Orçamento e que Tenha Mais Casas Decimais,  salvar como  Apenas Orçamento', () => {
     cy.fazerLoginMenuVenda('1')
     cy.Itens()
     cy.Cliente()
     cy.FormaPagamento()
     cy.Endereco()
     cy.FinalizarOrcamentoApenasOrcamento()
-    cy.EditarOrcamento()
-    cy.FinalizarOrcamentoApenasOrcamento() 
-})  
-  describe('Orçamentos - Geral Marcio', () => {
+}) 
+
+   describe('Orçamentos - Geral Marcio', () => {
 
     beforeEach(() => {
     cy.fazerLoginModuloVendas('ORC01', 'm')
@@ -69,23 +72,15 @@
   afterEach(() => {
     cy.verificarErroSistema()
   })
-   it('CT03-b)Fluxo  Venda completa/salvar/editar_quant_produto/salvar novamente como  ( orçamento confirmado) ', () => {
+  it('CT06-b - Pedido com Mais Itens no Orçamento e que Tenha Mais Casas Decimais,  salvar como Orçamento Confirmado  ', () => {
     cy.fazerLoginMenuVenda('1')
     cy.Itens()
     cy.Cliente()
     cy.FormaPagamento()
     cy.Endereco()
     cy.FinalizarOrcamentoConfirmado()
-    cy.EditarOrcamento()
-    cy.FinalizarOrcamentoConfirmado() 
-})  
+
+ 
 }) 
+})
 }) 
-
-
-
-
-
-
-
-

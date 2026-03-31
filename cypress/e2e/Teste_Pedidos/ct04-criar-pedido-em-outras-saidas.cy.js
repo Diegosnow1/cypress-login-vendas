@@ -1,6 +1,6 @@
  /**
  * ================================================================
- * --CASO DE TESTE: CT06 - Pedido de Transferência
+ * --CASO DE TESTE: CT05 - Pedido Outras Saídas como Orçamento Confirmado e Apenas Orçamento
  * ================================================================
  *
  * Ambiente: Homologação
@@ -11,7 +11,8 @@
  * --REGRAS IMPORTANTES (Recomendação do DEV) nº 3 
  * ----------------------------------------------------------------
  * Sempre realizar pelo menos:
- * - 1 pedido de Transferência
+ * - 1 pedido de Outras Saídas
+ * - 1 transferência
  *
  * Essas validações são críticas, pois alterações podem impactar
  * essa funcionalidade e gerar erro apenas no cliente final.
@@ -24,15 +25,15 @@
  * - Apenas Orçamento
  *
  * Validar que não ocorram erros ao:
- * - Criar pedido de Transferência
- * - Salvar o orçamento confirmado
+ * - Criar pedido de Outras Saídas
+ * - Salvar o orçamento
  *
  * ----------------------------------------------------------------
  * --RESULTADO ESPERADO
  * ----------------------------------------------------------------
- * Ao realizar um pedido de Transferência:
+ * Ao realizar um pedido de Outras Saídas:
  * - O orçamento deve ser finalizado com a situação
- *   "Orçamento Confirmado" e de "apenas orçamento"
+ *   "Orçamento Confirmado"
  * - O sistema não deve apresentar erros no fluxo
  *
  * ----------------------------------------------------------------
@@ -43,17 +44,8 @@
  * ================================================================
  */ 
 
-/*  const {
-  fazerLoginMenuTransferencia,
-  ItensTransferencia,
-  FilialDestino,
-  Cliente,
-  FormaPagamento,
-  Endereco,
-  FinalizarOrcamentoConfirmado,
-  FinalizarOrcamentoApenasOrcamento,
-  
-} = require('../../support/help') */
+
+
 
   describe('Orçamentos - Geral Marcio', () => {
 
@@ -64,30 +56,31 @@
   afterEach(() => {
     cy.verificarErroSistema()
   })
-  it('CT06-a - Pedido de Transferência como Orçamento Confirmado ', () => {
-    cy.fazerLoginMenuTransferencia('1')
-    cy.ItensTransferencia()
-    cy.FilialDestino()
-    cy.FinalizarOrcamentoConfirmado()
-
-})
-
-  describe('Orçamentos - Geral Marcio', () => {
-
-    beforeEach(() => {
-    cy.fazerLoginModuloVendas('ORC01', 'm')
-    
-  })
-  afterEach(() => {
-    cy.verificarErroSistema()
-  })
-  it('CT06-b - Pedido de Transferência como Apenas Orçamento', () => {
-    cy.fazerLoginMenuTransferencia('1')
-    cy.ItensTransferencia()
-    cy.FilialDestino()
+  it('CT04-a - Pedido Outras Saídas como Orçamento  Apenas Orçamento', () => {
+    cy.fazerLoginMenuOutrasSaidas('1')
+    cy.Itens()
+    cy.Cliente()
+    cy.Endereco()
     cy.FinalizarOrcamentoApenasOrcamento()
 
  
 }) 
-})
-})
+  describe('Orçamentos - Geral Marcio', () => {
+
+    beforeEach(() => {
+    cy.fazerLoginModuloVendas('ORC01', 'm')
+    
+  })
+  afterEach(() => {
+    cy.verificarErroSistema()
+  })
+  it('CT04-b - Pedido Outras Saídas como Orçamento Confirmado ', () => {
+    cy.fazerLoginMenuOutrasSaidas('1')
+    cy.Itens()
+    cy.Cliente()
+    cy.Endereco()
+    cy.FinalizarOrcamentoConfirmado()
+}) 
+
+}) 
+}) 
