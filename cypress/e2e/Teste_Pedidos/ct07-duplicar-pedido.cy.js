@@ -42,43 +42,26 @@
  */ 
 
 
-  describe('Orçamentos - Geral Marcio', () => {
+describe('Orçamentos - Geral Marcio', () => {
 
   beforeEach(() => {
-  cy.fazerLoginModuloVendas('ORC01', 'm')
-    
+    cy.fazerLoginModuloVendas('ORC01', 'm')
   })
+
   afterEach(() => {
     cy.verificarErroSistema()
   })
 
-
-
-  it.only('CT07-a Duplicar Orçamento e salvar como apenas orçamento', () => {
+  it('CT07-a Duplicar Orçamento e salvar como apenas orçamento', () => {
     cy.PesquisarOrcamento('1')
     cy.InformarOrcamentoDuplicar('2491130')
-
-    //cy.FinalizarOrcamentoApenasOrcamento()
-  }) 
-
-  describe('Orçamentos - Geral Marcio', () => {
-
-    beforeEach(() => {
-    cy.fazerLoginModuloVendas('ORC01', 'm')
-    
-  })
-  afterEach(() => {
-    cy.verificarErroSistema()
-  })
-
-
+    cy.FinalizarOrcamentoApenasOrcamento()
+  })  
 
   it('CT07-b Duplicar Orçamento e salvar como orçamento confirmado', () => {
     cy.PesquisarOrcamento('1')
+    cy.InformarOrcamentoDuplicar('2491130')
+    cy.FinalizarOrcamentoConfirmado()
+  }) 
 
-    //cy.FinalizarOrcamentoConfirmado()
-
- 
- }) 
- })
- }) 
+})

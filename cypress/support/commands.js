@@ -167,26 +167,45 @@ Cypress.Commands.add('responderPerguntaAjudaProfissionalSeExistir', () => {
 })
 
 Cypress.Commands.add('FinalizarOrcamentoApenasOrcamento', (page) => {
-  cy.get('#orcamento_menu_finalizar', { timeout: 30000 }).should('be.visible').click()
+  cy.get('#orcamento_menu_finalizar', { timeout: 30000 })
+  .should('be.visible')
+  .click()
 
-  cy.get('[name="FinalizarOrcamento_GrupoOpcaoOrcamento_ApenasOrcando"]').click()
-  cy.wait(8000)
-  cy.responderPerguntaAjudaProfissionalSeExistir()
-  cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento').click()
+  cy.contains('Apenas Orçamento',{ timeout: 60000 })
+  .should('be.visible') 
+  .click()
+ 
+  cy.get('[for="FinalizarOrcamento_Inconsistencias_TabelaPergunta_Dados_InputPergunta_#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#_Nao"] > [name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"]').click()
+
+  cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento')
+  .should('be.visible')
+  .and('not.be.disabled')
+  .click()
+
   //VALIDAR SE O ORÇAMENTO FOI FINALIZADO COM SUCESSO, MENSAGEM DE ORÇAMENTO CONCLUÍDO
-  cy.contains(/Orçamento Concluído/i, { timeout: 30000 }).should('be.visible')
+  cy.contains(/Orçamento Concluído/i, { timeout: 30000 })
+  .should('be.visible')
 })
 
 Cypress.Commands.add('FinalizarOrcamentoConfirmado', (page) => {
-  cy.get('#orcamento_menu_finalizar', { timeout: 30000 }).should('be.visible').click()
-  cy.wait(8000)
-  cy.get('[name="FinalizarOrcamento_GrupoOpcaoOrcamento_OrcamentoConfirmado"]').click()
-  cy.wait(8000)
-  cy.responderPerguntaAjudaProfissionalSeExistir()
-  cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento').click()
-  cy.wait(8000)
+  cy.get('#orcamento_menu_finalizar', { timeout: 30000 })
+  .should('be.visible')
+  .click()
+
+  cy.get('[name="FinalizarOrcamento_GrupoOpcaoOrcamento_OrcamentoConfirmado"]',{ timeout: 60000 })
+  .should('be.visible')
+  .click()
+  
+  cy.get('[for="FinalizarOrcamento_Inconsistencias_TabelaPergunta_Dados_InputPergunta_#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#_Nao"] > [name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"]').click()
+  
+  cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento', { timeout: 30000 })
+  .should('be.visible')
+  .and('not.be.disabled')
+  .click()
+ 
   //VALIDAR SE O ORÇAMENTO FOI FINALIZADO COM SUCESSO, MENSAGEM DE ORÇAMENTO CONCLUÍDO
-  cy.contains(/Orçamento Concluído/i, { timeout: 30000 }).should('be.visible')
+  cy.contains(/Orçamento Concluído/i, { timeout: 30000 })
+  .should('be.visible')
 })
 
 Cypress.Commands.add('EditarOrcamento', (page) => {
@@ -236,6 +255,7 @@ Cypress.Commands.add('FilialDestino', (page) => {
 Cypress.Commands.add('InformarOrcamentoDuplicar', (numped) => {
  cy.get('[name="NumeroPedido"]').click().type(numped)
  cy.get('#PesquisaOrcamento_BotaoPesquisar').click()
+ cy.get('#PesquisaOrcamento_botaoDuplicar').should('be.visible').click()
  
 })
 
