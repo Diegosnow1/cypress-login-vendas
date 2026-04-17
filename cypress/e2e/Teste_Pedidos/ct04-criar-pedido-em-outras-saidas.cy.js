@@ -1,88 +1,72 @@
  /**
  * ================================================================
- * --CASO DE TESTE: CT05 - Pedido Outras Saídas como Orçamento Confirmado e Apenas Orçamento
+ * --CASO DE TESTE: CT05 - Pedido Outras Saidas como Orcamento Confirmado e Apenas Orcamento
  * ================================================================
  *
- * Ambiente: Homologação
+ * Ambiente: Homologacao
  * Banco de Dados: Centrao_Diego
- * Versão da aplicação: master
+ * Versao da aplicacao: master
  *
  * ----------------------------------------------------------------
- * --REGRAS IMPORTANTES (Recomendação do DEV) nº 3 
+ * --REGRAS IMPORTANTES (Recomendacao do DEV) no 3
  * ----------------------------------------------------------------
  * Sempre realizar pelo menos:
- * - 1 pedido de Outras Saídas
- * - 1 transferência
+ * - 1 pedido de Outras Saidas
+ * - 1 transferencia
  *
- * Essas validações são críticas, pois alterações podem impactar
+ * Essas validacoes sao criticas, pois alteracoes podem impactar
  * essa funcionalidade e gerar erro apenas no cliente final.
  *
  * ----------------------------------------------------------------
  * --OBJETIVO DO TESTE
  * ----------------------------------------------------------------
- * Verificar se o sistema finaliza o orçamento com a situação:
- * - Orçamento Confirmado
- * - Apenas Orçamento
+ * Verificar se o sistema finaliza o orcamento com a situacao:
+ * - Orcamento Confirmado
+ * - Apenas Orcamento
  *
- * Validar que não ocorram erros ao:
- * - Criar pedido de Outras Saídas
- * - Salvar o orçamento
+ * Validar que nao ocorram erros ao:
+ * - Criar pedido de Outras Saidas
+ * - Salvar o orcamento
  *
  * ----------------------------------------------------------------
  * --RESULTADO ESPERADO
  * ----------------------------------------------------------------
- * Ao realizar um pedido de Outras Saídas:
- * - O orçamento deve ser finalizado com a situação
- *   "Orçamento Confirmado"
- * - O sistema não deve apresentar erros no fluxo
+ * Ao realizar um pedido de Outras Saidas:
+ * - O orcamento deve ser finalizado com a situacao
+ *   "Orcamento Confirmado"
+ * - O sistema nao deve apresentar erros no fluxo
  *
  * ----------------------------------------------------------------
- * --COMANDOS SQL AUXILIARES (se aplicável)
+ * --COMANDOS SQL AUXILIARES (se aplicavel)
  * ----------------------------------------------------------------
  * -- SQL
  *
  * ================================================================
- */ 
+ */
 
-
-
-
-  describe('Orçamentos - Geral Marcio', () => {
-
-    beforeEach(() => {
+describe('Orcamentos - Geral Marcio', () => {
+  beforeEach(() => {
     cy.fazerLoginModuloVendas('ORC01', 'm')
-    
   })
+
   afterEach(() => {
     cy.verificarErroSistema()
     cy.DeslogarModuloVendas()
   })
-  it('CT04-a - Pedido Outras Saídas como Orçamento  Apenas Orçamento', () => {
+
+  it('CT04-a - Pedido Outras Saidas como Orcamento Apenas Orcamento', () => {
     cy.fazerLoginMenuOutrasSaidas('1')
     cy.Itens()
     cy.Cliente()
     cy.Endereco()
     cy.FinalizarOrcamentoApenasOrcamento()
-
- 
-}) 
-  describe('Orçamentos - Geral Marcio', () => {
-
-    beforeEach(() => {
-    cy.fazerLoginModuloVendas('ORC01', 'm')
-    
   })
-  afterEach(() => {
-    cy.verificarErroSistema()
-    cy.DeslogarModuloVendas()
-  })
-  it('CT04-b - Pedido Outras Saídas como Orçamento Confirmado ', () => {
+
+  it('CT04-b - Pedido Outras Saidas como Orcamento Confirmado', () => {
     cy.fazerLoginMenuOutrasSaidas('1')
     cy.Itens()
     cy.Cliente()
     cy.Endereco()
     cy.FinalizarOrcamentoConfirmado()
-}) 
-
-}) 
-}) 
+  })
+})

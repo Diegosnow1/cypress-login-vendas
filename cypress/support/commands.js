@@ -264,11 +264,90 @@ Cypress.Commands.add('Endereco', (page) => {
 
 Cypress.Commands.add('responderPerguntaAjudaProfissionalSeExistir', () => {
   const seletorPergunta = '[for="FinalizarOrcamento_Inconsistencias_TabelaPergunta_Dados_InputPergunta_#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#_Nao"] > [name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"]'
+  const seletoresNao = [
+    seletorPergunta,
+    '[for*="ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO"][for$="_Nao"] input',
+    '[name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"][value="Nao"]',
+    '[name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"][value="False"]',
+    '[name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"][value="false"]'
+  ]
 
-  cy.get('body').then(($body) => {
-    if ($body.find(seletorPergunta).length) {
-      cy.get(seletorPergunta).click()
+  cy.get('body', { timeout: 30000 }).should(($body) => {
+    const existePergunta = $body.text().includes('Ocorreu ajuda de profissional')
+    const existeBotaoFinalizar = $body.find('#FinalizarOrcamento_botaoEncerrarOrcamento:visible').length > 0
+
+    expect(existePergunta || existeBotaoFinalizar, 'pergunta de ajuda profissional ou botao finalizar').to.eq(true)
+  }).then(($body) => {
+    const seletorEncontrado = seletoresNao.find((seletor) => $body.find(seletor).length)
+
+    if (seletorEncontrado) {
+      cy.get(seletorEncontrado)
+        .should('be.visible')
+        .click({ force: true })
+
+      return
     }
+
+    if ($body.text().includes('Ocorreu ajuda de profissional')) {
+      cy.contains('label, span, td, div', /^\s*Não\s*$/i)
+        .should('be.visible')
+        .click({ force: true })
+
+      return
+    }
+
+    const linhasPergunta = $body.find('tr, div').filter((_, elemento) => {
+      return elemento.innerText && elemento.innerText.includes('Ocorreu ajuda de profissional')
+    })
+
+    if (linhasPergunta.length) {
+      const radioNao = linhasPergunta.first().find('input[type="radio"]').last()
+
+      if (radioNao.length) {
+        cy.wrap(radioNao)
+          .should('be.visible')
+          .click({ force: true })
+      }
+    }
+  })
+})
+
+Cypress.Commands.add('selecionarOpcaoFinalizarOrcamento', (opcao) => {
+  const opcoes = {
+    apenasOrcamento: {
+      texto: /^Apenas Orçamento$/i,
+      seletores: [
+        '[name="FinalizarOrcamento_GrupoOpcaoOrcamento_ApenasOrcamento"]',
+        '[id="FinalizarOrcamento_GrupoOpcaoOrcamento_ApenasOrcamento"]',
+        '[value="ApenasOrcamento"]'
+      ]
+    },
+    orcamentoConfirmado: {
+      texto: /^Orçamento Confirmado$/i,
+      seletores: [
+        '[name="FinalizarOrcamento_GrupoOpcaoOrcamento_OrcamentoConfirmado"]',
+        '[id="FinalizarOrcamento_GrupoOpcaoOrcamento_OrcamentoConfirmado"]',
+        '[value="OrcamentoConfirmado"]'
+      ]
+    }
+  }
+
+  const config = opcoes[opcao]
+
+  cy.get('body', { timeout: 60000 }).then(($body) => {
+    const seletorEncontrado = config.seletores.find((seletor) => $body.find(seletor).length)
+
+    if (seletorEncontrado) {
+      cy.get(seletorEncontrado, { timeout: 60000 })
+        .should('be.visible')
+        .click({ force: true })
+
+      return
+    }
+
+    cy.contains('label', config.texto, { timeout: 60000 })
+      .should('be.visible')
+      .click({ force: true })
   })
 })
 
@@ -277,16 +356,15 @@ Cypress.Commands.add('FinalizarOrcamentoApenasOrcamento', (page) => {
   .should('be.visible')
   .click()
 
-  cy.contains('Apenas Orçamento',{ timeout: 60000 })
-  .should('be.visible') 
-  .click()
+  cy.selecionarOpcaoFinalizarOrcamento('apenasOrcamento')
  
-  cy.get('[for="FinalizarOrcamento_Inconsistencias_TabelaPergunta_Dados_InputPergunta_#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#_Nao"] > [name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"]').click()
+  cy.responderPerguntaAjudaProfissionalSeExistir()
 
-  cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento')
+  cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento', { timeout: 30000 })
+  .scrollIntoView()
   .should('be.visible')
   .and('not.be.disabled')
-  .click()
+  .click({ force: true })
 
   //VALIDAR SE O ORÇAMENTO FOI FINALIZADO COM SUCESSO, MENSAGEM DE ORÇAMENTO CONCLUÍDO
   cy.contains(/Orçamento Concluído/i, { timeout: 30000 })
@@ -298,16 +376,15 @@ Cypress.Commands.add('FinalizarOrcamentoConfirmado', (page) => {
   .should('be.visible')
   .click()
 
-  cy.get('[name="FinalizarOrcamento_GrupoOpcaoOrcamento_OrcamentoConfirmado"]',{ timeout: 60000 })
-  .should('be.visible')
-  .click()
+  cy.selecionarOpcaoFinalizarOrcamento('orcamentoConfirmado')
   
-  cy.get('[for="FinalizarOrcamento_Inconsistencias_TabelaPergunta_Dados_InputPergunta_#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#_Nao"] > [name="#ID_PERGUNTA_OCORREU_AJUDA_DE_PROFISSIONAL_INTERNO_EXTERNO#"]').click()
+  cy.responderPerguntaAjudaProfissionalSeExistir()
   
   cy.get('#FinalizarOrcamento_botaoEncerrarOrcamento', { timeout: 30000 })
+  .scrollIntoView()
   .should('be.visible')
   .and('not.be.disabled')
-  .click()
+  .click({ force: true })
  
   //VALIDAR SE O ORÇAMENTO FOI FINALIZADO COM SUCESSO, MENSAGEM DE ORÇAMENTO CONCLUÍDO
   cy.contains(/Orçamento Concluído/i, { timeout: 30000 })

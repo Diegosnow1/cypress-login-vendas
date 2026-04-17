@@ -1,85 +1,69 @@
  /**
  * ================================================================
- * --CASO DE TESTE: CT06 - Pedido de Transferência
+ * --CASO DE TESTE: CT06 - Pedido de Transferencia
  * ================================================================
  *
- * Ambiente: Homologação
+ * Ambiente: Homologacao
  * Banco de Dados: Centrao_Diego
- * Versão da aplicação: master
+ * Versao da aplicacao: master
  *
  * ----------------------------------------------------------------
- * --REGRAS IMPORTANTES (Recomendação do DEV) nº 3 
+ * --REGRAS IMPORTANTES (Recomendacao do DEV) no 3
  * ----------------------------------------------------------------
  * Sempre realizar pelo menos:
- * - 1 pedido de Transferência
+ * - 1 pedido de Transferencia
  *
- * Essas validações são críticas, pois alterações podem impactar
+ * Essas validacoes sao criticas, pois alteracoes podem impactar
  * essa funcionalidade e gerar erro apenas no cliente final.
  *
  * ----------------------------------------------------------------
  * --OBJETIVO DO TESTE
  * ----------------------------------------------------------------
- * Verificar se o sistema finaliza o orçamento com a situação:
- * - Orçamento Confirmado
- * - Apenas Orçamento
+ * Verificar se o sistema finaliza o orcamento com a situacao:
+ * - Orcamento Confirmado
+ * - Apenas Orcamento
  *
- * Validar que não ocorram erros ao:
- * - Criar pedido de Transferência
- * - Salvar o orçamento confirmado
+ * Validar que nao ocorram erros ao:
+ * - Criar pedido de Transferencia
+ * - Salvar o orcamento confirmado
  *
  * ----------------------------------------------------------------
  * --RESULTADO ESPERADO
  * ----------------------------------------------------------------
- * Ao realizar um pedido de Transferência:
- * - O orçamento deve ser finalizado com a situação
- *   "Orçamento Confirmado" e de "apenas orçamento"
- * - O sistema não deve apresentar erros no fluxo
+ * Ao realizar um pedido de Transferencia:
+ * - O orcamento deve ser finalizado com a situacao
+ *   "Orcamento Confirmado" e de "apenas orcamento"
+ * - O sistema nao deve apresentar erros no fluxo
  *
  * ----------------------------------------------------------------
- * --COMANDOS SQL AUXILIARES (se aplicável)
+ * --COMANDOS SQL AUXILIARES (se aplicavel)
  * ----------------------------------------------------------------
  * -- SQL
  *
  * ================================================================
- */ 
+ */
 
-
-
-  describe('Orçamentos - Geral Marcio', () => {
-
-    beforeEach(() => {
+describe('Orcamentos - Geral Marcio', () => {
+  beforeEach(() => {
     cy.fazerLoginModuloVendas('ORC01', 'm')
-    
   })
+
   afterEach(() => {
     cy.verificarErroSistema()
     cy.DeslogarModuloVendas()
   })
-  it('CT06-a - Pedido de Transferência como Orçamento Confirmado ', () => {
+
+  it('CT06-a - Pedido de Transferencia como Orcamento Confirmado', () => {
     cy.fazerLoginMenuTransferencia('1')
     cy.ItensTransferencia()
     cy.FilialDestino()
     cy.FinalizarOrcamentoConfirmado()
-
-})
-
-  describe('Orçamentos - Geral Marcio', () => {
-
-    beforeEach(() => {
-    cy.fazerLoginModuloVendas('ORC01', 'm')
-    
   })
-  afterEach(() => {
-    cy.verificarErroSistema()
-    cy.DeslogarModuloVendas()
-  })
-  it('CT06-b - Pedido de Transferência como Apenas Orçamento', () => {
+
+  it('CT06-b - Pedido de Transferencia como Apenas Orcamento', () => {
     cy.fazerLoginMenuTransferencia('1')
     cy.ItensTransferencia()
     cy.FilialDestino()
     cy.FinalizarOrcamentoApenasOrcamento()
-
- 
-}) 
-})
+  })
 })

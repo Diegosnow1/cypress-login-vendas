@@ -49,6 +49,7 @@
     cy.FinalizarOrcamentoApenasOrcamento()
     cy.EditarOrcamento()
     cy.FinalizarOrcamentoApenasOrcamento() 
+    cy.DeslogarModuloVendas()
 })  
   describe('Orçamentos - Geral Marcio', () => {
 
@@ -68,6 +69,7 @@
     cy.FinalizarOrcamentoConfirmado()
     cy.EditarOrcamento()
     cy.FinalizarOrcamentoConfirmado() 
+    cy.DeslogarModuloVendas()
 })  
 }) 
 }) 
