@@ -3,6 +3,23 @@ Cypress.Commands.add('esperar', () => {
   cy.contains(/Carregando|Aguarde/i, { timeout: 30000 }).should('not.exist')
 })
 
+Cypress.Commands.add('aguardarTelaCliente', () => {
+  cy.esperar()
+
+  cy.get('body', { timeout: 30000 }).should(($body) => {
+    expect($body.find('[name="CpfCnpj"]:visible').length, 'campo CpfCnpj visivel').to.be.greaterThan(0)
+    expect($body.find('#PesquisaCliente_BarraFerramenta_BotaoPesquisar:visible').length, 'botao pesquisar cliente visivel').to.be.greaterThan(0)
+  })
+})
+
+Cypress.Commands.add('aguardarTelaFormaPagamento', () => {
+  cy.esperar()
+
+  cy.get('#AbaFormaDePagamento_incluir', { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+})
+
 Cypress.Commands.add('fazerLoginModuloVendas', (usuario, senha) => {
   //cy.visit('http://10.10.10.197:9999/login')
   cy.visit('http://10.10.11.109:9999/login')
@@ -61,7 +78,8 @@ Cypress.Commands.add('PesquisarOrcamento', (senha_vendedor) => {
 
 })
 
-Cypress.Commands.add('ItensTintometrico', (page) => {
+Cypress.Commands.add('ItensTintometrico', () => {
+
   cy.intercept('POST', '/Produto/Pesquisar').as('pesquisarProduto')
   cy.intercept('POST', '/ItemOrcamento/ProdutoAdicionadoOrcamento').as('produtoAdicionado')
 
@@ -69,12 +87,15 @@ Cypress.Commands.add('ItensTintometrico', (page) => {
     .should('be.visible')
     .click()
 
-  cy.get('[name="Codigo"]').type('20245')
+  cy.get('[name="Codigo"]')
+    .clear()
+    .type('20245')
+
   cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
 
-  cy.wait('@pesquisarProduto') // 🔥 resolve 80% dos seus problemas
+  cy.wait('@pesquisarProduto')
 
-  cy.get('#ItemPesquisaProduto_BotaoTinta_20245')
+  cy.get('#ItemPesquisaProduto_BotaoTinta_20245', { timeout: 10000 })
     .should('be.visible')
     .click()
 
@@ -94,15 +115,33 @@ Cypress.Commands.add('ItensTintometrico', (page) => {
     .and('not.be.disabled')
     .click()
 
-     // 🔥 espera a ação REAL terminar
+  // 🔥 espera backend finalizar
   cy.wait('@produtoAdicionado')
+
+  // 🔥 pequeno delay para toast aparecer (evento assíncrono)
+  cy.wait(1500)
+
+  // 🔥 garante que não tem validação travando a tela
+  cy.contains('venda mínima', { timeout: 5000 })
+    .should('not.exist')
 
   cy.esperar()
 
   cy.get('#BarraFerramentasGrid_botaoOk', { timeout: 10000 })
     .should('be.visible')
     .click()
+
+  // 🔥 pós clique ainda pode atualizar
+  cy.esperar()
+
+  // 🔥 valida que pode sair da tela com segurança
+  cy.get('#input-Quantidade-item-Linha-1', { timeout: 30000 })
+    .should('be.visible')
+
+  cy.get('#orcamento_menu_cliente_react', { timeout: 20000 })
+    .should('be.visible')
 })
+
 
 Cypress.Commands.add('ItensForaEstoque', (page) => {
   cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
@@ -152,25 +191,61 @@ Cypress.Commands.add('Itens', (page) => {
 })
 
 Cypress.Commands.add('Cliente', (page) => {
-  cy.get('#orcamento_menu_cliente_react', { timeout: 30000 }).should('be.visible').click()
-  cy.wait(4000)
-  cy.get('[name="CpfCnpj"]').type('26.333.047/0001-60')
+  cy.intercept('POST', '/Orcamento/AtualizarCliente').as('atualizarCliente')
+  cy.intercept('POST', '/Orcamento/VerificarClienteSemAreaVenda').as('verificarClienteSemAreaVenda')
+
+  cy.esperar()
+
+  cy.get('#orcamento_menu_cliente_react', { timeout: 30000 })
+    .should('be.visible')
+    .click()
+
+  cy.aguardarTelaCliente()
+
+  cy.get('[name="CpfCnpj"]', { timeout: 30000 })
+    .should('be.visible')
+    .clear()
+    .type('26.333.047/0001-60')
+
   cy.get('#PesquisaCliente_BarraFerramenta_BotaoPesquisar').click()
   cy.get('#PesquisarCliente_Coluna_Nome_0').should('contain.text', 'COMERCIAL PEDROSA LTDA').click()
-  
+
+  cy.wait('@atualizarCliente')
+
   cy.get('#PendenciaCliente_BotaoOk').click()
-  cy.wait(4000)
+  cy.wait('@verificarClienteSemAreaVenda')
+  cy.wait('@atualizarCliente')
+  cy.esperar()
 })
 
+
 Cypress.Commands.add('FormaPagamento', (page) => {
-  cy.get('#orcamento_menu_formapagamento_react', { timeout: 30000 }).should('be.visible').click()
-  cy.get('#AbaFormaDePagamento_incluir').click()
-  cy.get('[name="Tipo"]').select('À Vista')
-  cy.get('[name="IdTipoDocumento"]').select('PIX')
-  cy.get('#IncluirEditarParcela_Valor').should('be.visible').clear().type('10,00', { force: true })
-  cy.wait(8000)
-  cy.get('#IncluirEditarParcela_BotaoAplicar').click()
-  cy.wait(8000)
+  cy.esperar()
+
+  cy.get('#orcamento_menu_formapagamento_react', { timeout: 30000 })
+    .should('be.visible')
+    .click()
+
+  cy.aguardarTelaFormaPagamento()
+
+  cy.get('#AbaFormaDePagamento_incluir')
+    .click()
+  cy.get('[name="Tipo"]', { timeout: 30000 })
+    .should('be.visible')
+    .select('À Vista')
+  cy.get('[name="IdTipoDocumento"]', { timeout: 30000 })
+    .should('be.visible')
+    .select('PIX')
+
+  cy.get('#IncluirEditarParcela_Valor', { timeout: 30000 })
+    .should('be.visible')
+    .clear()
+    .type('10,00', { force: true })
+  cy.get('#IncluirEditarParcela_BotaoAplicar', { timeout: 30000 })
+    .should('be.visible')
+    .and('not.be.disabled')
+    .click()
+  cy.esperar()
 })
 
 Cypress.Commands.add('Endereco', (page) => {
