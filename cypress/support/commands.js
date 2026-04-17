@@ -34,6 +34,15 @@ Cypress.Commands.add('fazerLoginModuloVendas', (usuario, senha) => {
 
   })
 
+Cypress.Commands.add('DeslogarModuloVendas', () => {  
+  cy.get('#abrirMenuPrincipal').click()
+  cy.get('#MenuPrincipal_Sair')
+  .should('be.visible')
+  .click()
+
+})
+
+
 Cypress.Commands.add('fazerLoginMenuVenda', (senha_Vendedor) => {
   cy.get('#MenuPrincipal_OrcamentoVenda', { timeout: 30000 }).should('be.visible').click()
   cy.get('[name="data-password"]').type(senha_Vendedor)

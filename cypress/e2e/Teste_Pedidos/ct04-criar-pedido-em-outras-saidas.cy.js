@@ -55,6 +55,7 @@
   })
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
   it('CT04-a - Pedido Outras Saídas como Orçamento  Apenas Orçamento', () => {
     cy.fazerLoginMenuOutrasSaidas('1')
@@ -73,6 +74,7 @@
   })
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
   it('CT04-b - Pedido Outras Saídas como Orçamento Confirmado ', () => {
     cy.fazerLoginMenuOutrasSaidas('1')

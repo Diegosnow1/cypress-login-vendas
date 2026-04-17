@@ -50,6 +50,7 @@ describe('Orçamentos - Geral Marcio', () => {
 
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
 
   it('CT07-a Duplicar Orçamento e salvar como apenas orçamento', () => {

@@ -53,6 +53,7 @@
   })
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
   it('CT06-a - Pedido de Transferência como Orçamento Confirmado ', () => {
     cy.fazerLoginMenuTransferencia('1')
@@ -70,6 +71,7 @@
   })
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
   it('CT06-b - Pedido de Transferência como Apenas Orçamento', () => {
     cy.fazerLoginMenuTransferencia('1')

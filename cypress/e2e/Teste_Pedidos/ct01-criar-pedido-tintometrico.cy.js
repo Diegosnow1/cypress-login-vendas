@@ -41,6 +41,7 @@ describe('Orçamentos - Geral Marcio', () => {
   })
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
 
   it('CT01 Fluxo Venda completa produto tintometrico', () => {

@@ -53,6 +53,7 @@
   })
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
   it('CT06-a - Pedido com Mais Itens no Orçamento e que Tenha Mais Casas Decimais,  salvar como  Apenas Orçamento', () => {
     cy.fazerLoginMenuVenda('1')
@@ -71,6 +72,7 @@
   })
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
   it('CT06-b - Pedido com Mais Itens no Orçamento e que Tenha Mais Casas Decimais,  salvar como Orçamento Confirmado  ', () => {
     cy.fazerLoginMenuVenda('1')

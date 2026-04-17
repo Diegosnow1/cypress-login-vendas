@@ -40,6 +40,7 @@
   })
   afterEach(() => {
     cy.verificarErroSistema()
+    cy.DeslogarModuloVendas()
   })
 it('CT02 Fluxo  Venda completa produto fora de estoque', () => {
     cy.fazerLoginMenuVenda('1')
