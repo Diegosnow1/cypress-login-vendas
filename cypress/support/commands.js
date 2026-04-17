@@ -4,8 +4,9 @@ Cypress.Commands.add('esperar', () => {
 })
 
 Cypress.Commands.add('fazerLoginModuloVendas', (usuario, senha) => {
-  cy.visit('http://10.10.10.197:9999/login')
-  //cy.visit('http://10.10.11.138:9999/login')
+  //cy.visit('http://10.10.10.197:9999/login')
+  cy.visit('http://10.10.11.109:9999/login')
+  //cy.visit('http://localhost:9999/login')
   cy.get('#Login_Usuario').type(usuario)
   cy.get('#Login_Senha').type(senha, { force: true })
   cy.get('#Login_BotaoEntrar').click()
@@ -61,25 +62,46 @@ Cypress.Commands.add('PesquisarOrcamento', (senha_vendedor) => {
 })
 
 Cypress.Commands.add('ItensTintometrico', (page) => {
-  cy.get('#orcamento_menu_itens', { timeout: 30000 }).should('be.visible').click()
+  cy.intercept('POST', '/Produto/Pesquisar').as('pesquisarProduto')
+  cy.intercept('POST', '/ItemOrcamento/ProdutoAdicionadoOrcamento').as('produtoAdicionado')
+
+  cy.get('#orcamento_menu_itens', { timeout: 30000 })
+    .should('be.visible')
+    .click()
+
   cy.get('[name="Codigo"]').type('20245')
   cy.get('#PaginaPesquisaProduto_botaoPesquisar').click()
-  cy.get('#ItemPesquisaProduto_BotaoTinta_20245').should('be.visible').click()
+
+  cy.wait('@pesquisarProduto') // 🔥 resolve 80% dos seus problemas
+
+  cy.get('#ItemPesquisaProduto_BotaoTinta_20245')
+    .should('be.visible')
+    .click()
+
   cy.esperar()
+
   cy.contains('button', /^Pesquisar$/i, { timeout: 30000 })
     .should('be.visible')
     .and('not.be.disabled')
     .click()
+
   cy.contains('#tabela-fornecedores td, #tabela-fornecedores div, #tabela-fornecedores span', /^ABSINTO$/i, { timeout: 30000 })
     .should('be.visible')
     .click()
+
   cy.contains('button', /^OK$/i, { timeout: 30000 })
     .should('be.visible')
     .and('not.be.disabled')
     .click()
 
-  cy.get(':nth-child(2) > #BarraFerramentasGrid_botaoOk').click()
-  cy.wait(8000)
+     // 🔥 espera a ação REAL terminar
+  cy.wait('@produtoAdicionado')
+
+  cy.esperar()
+
+  cy.get('#BarraFerramentasGrid_botaoOk', { timeout: 10000 })
+    .should('be.visible')
+    .click()
 })
 
 Cypress.Commands.add('ItensForaEstoque', (page) => {
