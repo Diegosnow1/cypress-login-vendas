@@ -21,9 +21,9 @@ Cypress.Commands.add('aguardarTelaFormaPagamento', () => {
 })
 
 Cypress.Commands.add('fazerLoginModuloVendas', (usuario, senha) => {
-  cy.visit('http://10.10.10.197:9999/login')
+  //cy.visit('http://10.10.10.197:9999/login')
   //cy.visit('http://10.10.11.109:9999/login')
-  //cy.visit('http://localhost:9999/login')
+  cy.visit('http://localhost:9999/login')
   cy.get('#Login_Usuario').type(usuario)
   cy.get('#Login_Senha').type(senha, { force: true })
   cy.get('#Login_BotaoEntrar').click()

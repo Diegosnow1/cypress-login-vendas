@@ -130,5 +130,5 @@ npx cypress run --spec "cypress/e2e/Teste_Geral/CT0*.cy.js"
 ### ▶️ Execução com interface (modo visual)
 
 ```bash
-npx cypress run --headed --browser chrome --spec "cypress/e2e/Teste_Geral/CT0*.cy.js"
+npx cypress run --headed --browser edge --spec "cypress/e2e/Teste_Pedidos/*.cy.js"
 ```
